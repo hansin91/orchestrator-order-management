@@ -15,6 +15,18 @@
     "paths": {
       "@interfaces": [
         "src/interfaces"
+      ],
+      "@controllers": [
+        "src/controllers"
+      ],
+      "@services": [
+        "src/services"
+      ],
+      "@grpcControllers":[
+        "src/grpc-controllers"
+      ],
+      "@modules":[
+        "src/modules"
       ]
     }
   },

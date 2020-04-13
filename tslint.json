@@ -13,6 +13,7 @@
             "single"
         ],
         "indent": false,
+        "align": [true, "parameters", "statements"],
         "member-access": [
             false
         ],
