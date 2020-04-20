@@ -1,21 +1,31 @@
+import '../env';
 import { Module, HttpModule } from '@nestjs/common';
-import { ClientsModule } from '@nestjs/microservices';
-import { grpcClientOptions } from '../grpc-client.options';
+import { ClientsModule, Transport, ClientOptions } from '@nestjs/microservices';
 import { AuthService } from '@services';
 import { AuthController } from '@controllers';
-import { AuthGrpcController } from '@grpcControllers';
+
+const host = process.env.HOST;
+const port = Number(process.env.PORT);
+
+export const clientOptions: ClientOptions = {
+  transport: Transport.TCP,
+  options: {
+    host,
+    port,
+  },
+};
 
 @Module({
   imports: [
     HttpModule,
     ClientsModule.register([
       {
-        name: 'AUTH_PACKAGE',
-        ...grpcClientOptions,
+        name: 'AUTH_SERVICE',
+        ...clientOptions,
       },
     ]),
   ],
   providers: [AuthService],
-  controllers: [AuthController, AuthGrpcController],
+  controllers: [AuthController],
 })
 export class AuthModule {}

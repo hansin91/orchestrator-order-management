@@ -1,20 +1,18 @@
-import { Controller, OnModuleInit, Inject, Post, Body } from '@nestjs/common';
-import { ClientGrpc } from '@nestjs/microservices';
+import { Controller, Post, Body, HttpException } from '@nestjs/common';
 import { AuthService } from '@services';
 import { ILogin } from '@interfaces';
 
 @Controller('auth')
-export class AuthController implements OnModuleInit {
-  constructor(@Inject('AUTH_PACKAGE')
-    private readonly client: ClientGrpc,
-              private authService: AuthService) {}
+export class AuthController {
+  constructor(private authService: AuthService) {}
 
-  onModuleInit() {
-    this.authService = this.client.getService<AuthService>('AuthService');
-  }
-
-  @Post()
-  login(@Body('data') data: ILogin) {
-    return this.authService.login(data);
+  @Post('login')
+  async login(@Body() data: ILogin) {
+    try {
+      const response = await this.authService.login(data);
+      return response;
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
   }
 }

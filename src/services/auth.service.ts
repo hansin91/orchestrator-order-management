@@ -1,11 +1,14 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { ILogin } from '@interfaces';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly httpService: HttpService){}
+  constructor(
+    @Inject('AUTH_SERVICE') private readonly clientService: ClientProxy) {}
 
-  login(data: ILogin) {
-    return this.httpService.post(process.env.ADMIN_URL + '/api/auth/login', data);
+  login(payload: ILogin) {
+    const pattern = { cmd: 'login'};
+    return this.clientService.send<ILogin>(pattern, payload).toPromise();
   }
 }
