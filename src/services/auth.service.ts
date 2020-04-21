@@ -9,6 +9,11 @@ export class AuthService {
 
   login(payload: ILogin) {
     const pattern = { cmd: 'login'};
-    return this.clientService.send<ILogin>(pattern, payload).toPromise();
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  verify(token: string) {
+    const pattern = { cmd: 'verify' };
+    return this.clientService.send<any>(pattern, token).toPromise();
   }
 }
