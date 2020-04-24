@@ -40,4 +40,15 @@ export class AuthController {
       throw new HttpException(error, error.status);
     }
   }
+
+  @Post('logout')
+  async logout(@Req() req: Request, @Res() res: Response) {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const response = await this.authService.logout(token);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
 }

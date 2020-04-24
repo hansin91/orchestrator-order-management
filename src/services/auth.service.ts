@@ -17,6 +17,11 @@ export class AuthService {
     return this.clientService.send<any>(pattern, token).toPromise();
   }
 
+  logout(token: string) {
+    const pattern = { cmd: 'logout' };
+    return this.clientService.send<any>(pattern, token).toPromise();
+  }
+
   googleLogin(payload: any) {
     const pattern = { cmd: 'gLogin' };
     return this.clientService.send<any>(pattern, payload).toPromise();
