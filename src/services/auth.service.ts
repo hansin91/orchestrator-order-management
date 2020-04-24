@@ -16,4 +16,9 @@ export class AuthService {
     const pattern = { cmd: 'verify' };
     return this.clientService.send<any>(pattern, token).toPromise();
   }
+
+  googleLogin(payload: any) {
+    const pattern = { cmd: 'gLogin' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }

@@ -28,4 +28,16 @@ export class AuthController {
       throw new HttpException(error, error.status);
     }
   }
+
+  @Post('gLogin')
+  async googleLogin(@Req() req: Request, @Res() res: Response) {
+    try {
+      const authorization = req.headers.authorization;
+      const token = authorization.split(' ')[1];
+      const response = await this.authService.googleLogin(token);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
 }
