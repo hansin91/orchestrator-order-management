@@ -1,21 +1,20 @@
-import '../env';
 import { Module, HttpModule } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
-import { AuthService } from '@services';
-import { AuthController } from '@controllers';
 import { clientOptions } from '../client';
+import { CategoryService } from '@services';
+import { CategoryController } from 'src/controllers/category.controller';
 
 @Module({
   imports: [
     HttpModule,
     ClientsModule.register([
       {
-        name: 'AUTH_SERVICE',
+        name: 'CATEGORY_SERVICE',
         ...clientOptions,
       },
     ]),
   ],
-  providers: [AuthService],
-  controllers: [AuthController],
+  providers: [CategoryService],
+  controllers: [CategoryController],
 })
-export class AuthModule {}
+export class CategoryModule {}
