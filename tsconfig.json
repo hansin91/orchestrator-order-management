@@ -22,12 +22,6 @@
       "@services": [
         "src/services"
       ],
-      "@grpcControllers":[
-        "src/grpc-controllers"
-      ],
-      "@modules":[
-        "src/modules"
-      ]
     }
   },
   "include": [
