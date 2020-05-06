@@ -10,4 +10,9 @@ export class GroupService {
     const pattern = { cmd: 'add-group'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  loadGroups(token: string) {
+    const pattern = { cmd: 'load-groups'};
+    return this.clientService.send<any>(pattern, token).toPromise();
+  }
 }
