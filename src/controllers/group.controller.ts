@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, Get, Req, Res, Next, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, Get, Req, Res, Next, Put, Param } from '@nestjs/common';
 import { GroupService } from '@services';
 import { Request, Response, NextFunction } from 'express';
 
@@ -14,6 +14,21 @@ export class GroupController {
         body: data,
       };
       const response = await this.groupService.addGroup(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Put(':id')
+  async editGroup(@Body() data: any, @Req() req: Request, @Res() res: Response) {
+    try {
+      const payload = {
+        token: req.headers.authorization.split(' ')[1],
+        body: data,
+        id: +req.params.id,
+      };
+      const response = await this.groupService.editGroup(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
