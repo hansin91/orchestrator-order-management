@@ -16,6 +16,11 @@ export class GroupService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  deleteGroup(payload: IPayload) {
+    const pattern = { cmd: 'delete-group'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
   loadGroups(token: string) {
     const pattern = { cmd: 'load-groups'};
     return this.clientService.send<any>(pattern, token).toPromise();
