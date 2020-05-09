@@ -1,8 +1,8 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
 import { clientOptions } from './client';
-import { AuthService, CategoryService, GroupService } from '@services';
-import { AuthController, CategoryController, GroupController } from '@controllers';
+import { AuthService, CategoryService, GroupService, OrderService } from '@services';
+import { AuthController, CategoryController, GroupController, OrderController } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
 
 @Module({
@@ -25,9 +25,15 @@ import { IsAuthenticated } from './middlewares/isAuthenticated';
         ...clientOptions,
       },
     ]),
+    ClientsModule.register([
+      {
+        name: 'ORDER_SERVICE',
+        ...clientOptions,
+      },
+    ]),
   ],
-  providers: [AuthService, CategoryService, GroupService],
-  controllers: [AuthController, CategoryController, GroupController],
+  providers: [AuthService, CategoryService, GroupService, OrderService],
+  controllers: [AuthController, CategoryController, GroupController, OrderController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -37,6 +43,6 @@ export class AppModule implements NestModule {
       { path: 'auth/login', method: RequestMethod.POST },
       { path: 'auth/gLogin', method: RequestMethod.POST },
     )
-    .forRoutes(GroupController, AuthController, CategoryController);
+    .forRoutes(GroupController, AuthController, CategoryController, OrderController);
   }
 }

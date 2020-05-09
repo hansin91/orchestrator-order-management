@@ -1,6 +1,6 @@
-import { Controller, Post, Body, HttpException, Get, Req, Res, Next, Put, Delete } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, Get, Req, Res, Put, Delete } from '@nestjs/common';
 import { GroupService } from '@services';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('groups')
 export class GroupController {
@@ -50,7 +50,7 @@ export class GroupController {
   }
 
   @Get()
-  async loadGroups(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+  async loadGroups(@Req() req: Request, @Res() res: Response) {
     try {
       const authorization = req.headers.authorization;
       const token = authorization.split(' ')[1];
