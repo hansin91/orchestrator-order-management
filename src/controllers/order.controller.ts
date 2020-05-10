@@ -23,4 +23,22 @@ export class OrderController {
       throw new HttpException(error, error.status);
     }
   }
+
+  @Get('status')
+  async loadOrderStatus(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      const date = req.query.date;
+      if (date) {
+        payload.date = date;
+      }
+      const response = await this.orderService.loadOrderStatus(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
 }

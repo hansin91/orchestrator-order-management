@@ -11,4 +11,9 @@ export class OrderService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadOrderStatus(payload: IPayload) {
+    const pattern = { cmd: 'order-status'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }
