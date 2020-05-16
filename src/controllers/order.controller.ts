@@ -16,6 +16,7 @@ export class OrderController {
       const date = req.query.date;
       const shipping = req.query.shipping;
       const status = req.query.status;
+      const page = req.query.page;
       if (date) {
         payload.date = date;
       }
@@ -24,6 +25,9 @@ export class OrderController {
       }
       if (status) {
         payload.status = status;
+      }
+      if (page) {
+        payload.page = page;
       }
       const response = await this.orderService.loadOrders(payload);
       res.status(response.status).json(response);
