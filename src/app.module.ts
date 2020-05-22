@@ -1,8 +1,22 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
 import { clientOptions } from './client';
-import { AuthService, CategoryService, GroupService, OrderService } from '@services';
-import { AuthController, CategoryController, GroupController, OrderController } from '@controllers';
+import {
+  AuthService,
+  CategoryService,
+  GroupService,
+  OrderService,
+  StatusService,
+  ShippingService,
+} from '@services';
+import {
+  AuthController,
+  CategoryController,
+  GroupController,
+  OrderController,
+  StatusController,
+  ShippingController,
+} from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
 
 @Module({
@@ -31,9 +45,33 @@ import { IsAuthenticated } from './middlewares/isAuthenticated';
         ...clientOptions,
       },
     ]),
+    ClientsModule.register([
+      {
+        name: 'STATUS_SERVICE',
+        ...clientOptions,
+      },
+    ]),
+    ClientsModule.register([
+      {
+        name: 'SHIPPING_SERVICE',
+        ...clientOptions,
+      },
+    ]),
   ],
-  providers: [AuthService, CategoryService, GroupService, OrderService],
-  controllers: [AuthController, CategoryController, GroupController, OrderController],
+  providers: [
+    AuthService,
+    CategoryService,
+    GroupService,
+    OrderService,
+    ShippingService,
+    StatusService],
+  controllers: [
+    AuthController,
+    CategoryController,
+    GroupController,
+    OrderController,
+    ShippingController,
+    StatusController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -43,6 +81,12 @@ export class AppModule implements NestModule {
       { path: 'auth/login', method: RequestMethod.POST },
       { path: 'auth/gLogin', method: RequestMethod.POST },
     )
-    .forRoutes(GroupController, AuthController, CategoryController, OrderController);
+    .forRoutes(
+      GroupController,
+      AuthController,
+      CategoryController,
+      StatusController,
+      ShippingController,
+      OrderController);
   }
 }

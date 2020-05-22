@@ -13,10 +13,7 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const date = req.query.date;
-      const shipping = req.query.shipping;
-      const status = req.query.status;
-      const page = req.query.page;
+      const { date, shipping, status, page, shippingId } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -28,6 +25,9 @@ export class OrderController {
       }
       if (page) {
         payload.page = page;
+      }
+      if (shippingId) {
+        payload.shippingId = shippingId;
       }
       const response = await this.orderService.loadOrders(payload);
       res.status(response.status).json(response);
