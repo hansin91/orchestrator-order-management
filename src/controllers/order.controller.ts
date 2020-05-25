@@ -1,10 +1,27 @@
-import { Controller, Get, Req, Res, HttpException } from '@nestjs/common';
+import { Controller, Get, Req, Res, HttpException, Post, Body } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { OrderService } from '@services';
+import { OrderService, QueueService } from '@services';
 
 @Controller('orders')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly queueService: QueueService,
+    private readonly orderService: OrderService) {}
+
+  @Post()
+  async saveOrder(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      payload.body = req.body;
+      const response = await this.queueService.saveOrder(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
 
   @Get()
   async loadOrders(@Req() req: Request, @Res() res: Response) {

@@ -8,6 +8,7 @@ import {
   OrderService,
   StatusService,
   ShippingService,
+  QueueService,
 } from '@services';
 import {
   AuthController,
@@ -18,6 +19,7 @@ import {
   ShippingController,
 } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
+import { rabbitMQOptions } from './rabbitMQ';
 
 @Module({
   imports: [
@@ -57,6 +59,12 @@ import { IsAuthenticated } from './middlewares/isAuthenticated';
         ...clientOptions,
       },
     ]),
+    ClientsModule.register([
+      {
+        name: 'QUEUE_SERVICE',
+        ...rabbitMQOptions,
+      },
+    ]),
   ],
   providers: [
     AuthService,
@@ -64,6 +72,7 @@ import { IsAuthenticated } from './middlewares/isAuthenticated';
     GroupService,
     OrderService,
     ShippingService,
+    QueueService,
     StatusService],
   controllers: [
     AuthController,
