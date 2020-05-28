@@ -12,7 +12,7 @@ export class OrderService {
   }
 
   editOrder(payload: IPayload) {
-    const pattern = { cmd: 'edit-order'}
+    const pattern = { cmd: 'edit-order'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 

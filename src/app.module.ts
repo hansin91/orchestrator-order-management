@@ -9,6 +9,7 @@ import {
   StatusService,
   ShippingService,
   QueueService,
+  PageService,
 } from '@services';
 import {
   AuthController,
@@ -17,6 +18,7 @@ import {
   OrderController,
   StatusController,
   ShippingController,
+  PageController,
 } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
 import { rabbitMQOptions } from './rabbitMQ';
@@ -61,6 +63,12 @@ import { rabbitMQOptions } from './rabbitMQ';
     ]),
     ClientsModule.register([
       {
+        name: 'PAGE_SERVICE',
+        ...clientOptions,
+      },
+    ]),
+    ClientsModule.register([
+      {
         name: 'QUEUE_SERVICE',
         ...rabbitMQOptions,
       },
@@ -73,14 +81,16 @@ import { rabbitMQOptions } from './rabbitMQ';
     OrderService,
     ShippingService,
     QueueService,
-    StatusService],
+    StatusService,
+    PageService],
   controllers: [
     AuthController,
     CategoryController,
     GroupController,
     OrderController,
     ShippingController,
-    StatusController],
+    StatusController,
+    PageController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -96,6 +106,7 @@ export class AppModule implements NestModule {
       CategoryController,
       StatusController,
       ShippingController,
+      PageController,
       OrderController);
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, HttpException, Post, Body, Put } from '@nestjs/common';
+import { Controller, Get, Req, Res, HttpException, Post, Put } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { OrderService, QueueService } from '@services';
 
@@ -36,7 +36,7 @@ export class OrderController {
     } catch (error) {
       throw new HttpException(error, error.status);
     }
-  } 
+  }
 
   @Post('bulk')
   async saveBulkOrder(@Req() req: Request, @Res() res: Response) {

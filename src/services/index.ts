@@ -5,3 +5,4 @@ export * from './order.service';
 export * from './status.service';
 export * from './shipping.service';
 export * from './queue.service';
+export * from './page.service';
