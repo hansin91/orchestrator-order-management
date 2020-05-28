@@ -10,4 +10,9 @@ export class QueueService {
     const pattern = { cmd: 'save-order'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  saveBulkOrder(payload: IPayload) {
+    const pattern = { cmd: 'save-bulk-order'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }

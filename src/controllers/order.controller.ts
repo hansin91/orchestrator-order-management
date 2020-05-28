@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, HttpException, Post, Body } from '@nestjs/common';
+import { Controller, Get, Req, Res, HttpException, Post, Body, Put } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { OrderService, QueueService } from '@services';
 
@@ -17,6 +17,36 @@ export class OrderController {
       };
       payload.body = req.body;
       const response = await this.queueService.saveOrder(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Put()
+  async editOrder(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      payload.body = req.body;
+      const response = await this.orderService.editOrder(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  } 
+
+  @Post('bulk')
+  async saveBulkOrder(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      payload.body = req.body;
+      const response = await this.queueService.saveBulkOrder(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
