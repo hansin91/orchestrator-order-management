@@ -10,4 +10,9 @@ export class StatusService {
     const pattern = { cmd: 'load-status'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  loadStatusSummary(payload: IPayload) {
+    const pattern = { cmd: 'load-status-summary'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }
