@@ -5,3 +5,4 @@ export * from './order.controller';
 export * from './status.controller';
 export * from './shipping.controller';
 export * from './page.controller';
+export * from './product.controller';

@@ -6,3 +6,4 @@ export * from './status.service';
 export * from './shipping.service';
 export * from './queue.service';
 export * from './page.service';
+export * from './product.service';
