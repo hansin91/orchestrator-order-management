@@ -11,6 +11,16 @@ export class OrderService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadPrintedOrders(payload: IPayload) {
+    const pattern = { cmd: 'order-print' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  printOrders(payload: IPayload) {
+    const pattern = { cmd: 'print-orders'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
   editOrder(payload: IPayload) {
     const pattern = { cmd: 'edit-order'};
     return this.clientService.send<any>(pattern, payload).toPromise();
@@ -33,6 +43,11 @@ export class OrderService {
 
   loadOrderLocked(payload: IPayload) {
     const pattern = { cmd: 'order-locked'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  loadOrderPages(payload: IPayload) {
+    const pattern = { cmd: 'order-pages'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
