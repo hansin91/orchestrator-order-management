@@ -75,7 +75,7 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { date, shipping, status, page, shippingId } = req.query;
+      const { dropshipping, offset, limit, date, start, end, shipping, status, page, shippingId } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -91,6 +91,21 @@ export class OrderController {
       if (shippingId) {
         payload.shippingId = shippingId;
       }
+      if (start) {
+        payload.start = start;
+      }
+      if (end) {
+        payload.end = end;
+      }
+      if (offset) {
+        payload.offset = offset;
+      }
+      if (limit) {
+        payload.limit = limit;
+      }
+      if (dropshipping) {
+        payload.dropshipping = dropshipping;
+      }
       const response = await this.orderService.loadOrders(payload);
       res.status(response.status).json(response);
     } catch (error) {
@@ -105,9 +120,24 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { date } = req.query;
+      const { dropshipping, shipping, status, date, start, end } = req.query;
       if (date) {
         payload.date = date;
+      }
+      if (start) {
+        payload.start = start;
+      }
+      if (end) {
+        payload.end = end;
+      }
+      if (shipping) {
+        payload.shipping = shipping;
+      }
+      if (status) {
+        payload.status = status;
+      }
+      if (dropshipping) {
+        payload.dropshipping = dropshipping;
       }
       const response = await this.orderService.loadTotalOrderTotalPage(payload);
       res.status(response.status).json(response);
@@ -123,11 +153,59 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { date } = req.query;
+      const { dropshipping, shipping, status, date, start, end } = req.query;
       if (date) {
         payload.date = date;
       }
+      if (start) {
+        payload.start = start;
+      }
+      if (end) {
+        payload.end = end;
+      }
+      if (shipping) {
+        payload.shipping = shipping;
+      }
+      if (status) {
+        payload.status = status;
+      }
+      if (dropshipping) {
+        payload.dropshipping = dropshipping;
+      }
       const response = await this.orderService.loadOrderShippings(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Get('dropshipping')
+  async loadOrderDropshipping(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      const { dropshipping, shipping, status, date, start, end } = req.query;
+      if (date) {
+        payload.date = date;
+      }
+      if (start) {
+        payload.start = start;
+      }
+      if (end) {
+        payload.end = end;
+      }
+      if (shipping) {
+        payload.shipping = shipping;
+      }
+      if (status) {
+        payload.status = status;
+      }
+      if (dropshipping) {
+        payload.dropshipping = dropshipping;
+      }
+      const response = await this.orderService.loadOrderDropshipping(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
@@ -141,9 +219,24 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { date } = req.query;
+      const { dropshipping, status, shipping, date, start, end } = req.query;
       if (date) {
         payload.date = date;
+      }
+      if (start) {
+        payload.start = start;
+      }
+      if (end) {
+        payload.end = end;
+      }
+      if (shipping) {
+        payload.shipping = shipping;
+      }
+      if (status) {
+        payload.status = status;
+      }
+      if (dropshipping) {
+        payload.dropshipping = dropshipping;
       }
       const response = await this.orderService.loadOrderStatus(payload);
       res.status(response.status).json(response);

@@ -41,6 +41,11 @@ export class OrderService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadOrderDropshipping(payload: IPayload) {
+    const pattern = { cmd: 'order-dropshipping'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
   loadOrderLocked(payload: IPayload) {
     const pattern = { cmd: 'order-locked'};
     return this.clientService.send<any>(pattern, payload).toPromise();
