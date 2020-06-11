@@ -12,6 +12,7 @@
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && tsc",
     "start:prod": "node -r module-alias/register dist/main.js",
+    "start:pm2": "pm2 start npm --name 'orchestrator' -- run start:prod",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
