@@ -11,6 +11,11 @@ export class OrderService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadOrderShopee(payload: IPayload) {
+    const pattern = { cmd: 'orders-shopee'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
   loadPrintedOrders(payload: IPayload) {
     const pattern = { cmd: 'order-print' };
     return this.clientService.send<any>(pattern, payload).toPromise();

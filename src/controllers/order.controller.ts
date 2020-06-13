@@ -113,6 +113,30 @@ export class OrderController {
     }
   }
 
+  @Get('shopee')
+  async loadOrderShopee(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      const { status, offset, limit } = req.query;
+      if (status) {
+        payload.status = status;
+      }
+      if (offset) {
+        payload.offset = offset;
+      }
+      if (limit) {
+        payload.limit = limit;
+      }
+      const response = await this.orderService.loadOrderShopee(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
   @Get('total')
   async loadTotalOrderTotalPage(@Req() req: Request, @Res() res: Response) {
     try {
