@@ -11,6 +11,11 @@ export class ShippingService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadShippingSummary(payload: IPayload) {
+    const pattern = { cmd: 'load-shipping-summary' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
   loadShippingOrders(payload: IPayload) {
     const pattern = { cmd: 'load-shipping-orders'};
     return this.clientService.send<any>(pattern, payload).toPromise();

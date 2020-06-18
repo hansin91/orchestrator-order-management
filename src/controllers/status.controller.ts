@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res, HttpException } from '@nestjs/common';
-import { StatusService } from '@services';
 import { Request, Response } from 'express';
+import { StatusService } from '@services';
 
 @Controller('status')
 export class StatusController {
@@ -29,7 +29,7 @@ export class StatusController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { start, end, dropshipping, date, shipping, status, page } = req.query;
+      const { stores, start, end, dropshipping, date, shipping, status, page } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -50,6 +50,9 @@ export class StatusController {
       }
       if (dropshipping) {
         payload.dropshipping = dropshipping;
+      }
+      if (stores) {
+        payload.stores = stores;
       }
       const response = await this.statusService.loadStatusSummary(payload);
       res.status(response.status).json(response);
