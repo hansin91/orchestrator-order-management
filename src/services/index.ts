@@ -7,3 +7,4 @@ export * from './shipping.service';
 export * from './queue.service';
 export * from './page.service';
 export * from './product.service';
+export * from './store.service';
