@@ -6,6 +6,30 @@ import {  ProductService } from '@services';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Get()
+  async loadProducts(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      const { name, page, limit } = req.query;
+      if (name) {
+        payload.name = name;
+      }
+      if (page) {
+        payload.page = page;
+      }
+      if (limit) {
+        payload.limit = limit;
+      }
+      const response = await this.productService.loadProducts(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
   @Get('summary')
   async loadProductSummary(@Req() req: Request, @Res() res: Response) {
     try {
@@ -13,7 +37,7 @@ export class ProductController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { stores, date, shipping, status, page } = req.query;
+      const { search, stores, date, shipping, status, page } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -28,6 +52,9 @@ export class ProductController {
       }
       if (stores) {
         payload.stores = stores;
+      }
+      if (search) {
+        payload.search = search;
       }
       const response = await this.productService.loadProductSummary(payload);
       res.status(response.status).json(response);

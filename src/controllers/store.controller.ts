@@ -13,7 +13,7 @@ export class StoreController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { stores, start, end, dropshipping, date, shipping, status, page } = req.query;
+      const { search, stores, start, end, dropshipping, date, shipping, status, page } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -37,6 +37,9 @@ export class StoreController {
       }
       if (stores) {
         payload.stores = stores;
+      }
+      if (search) {
+        payload.search = search;
       }
       const response = await this.storeService.loadStoreShippings(payload);
       res.status(response.status).json(response);

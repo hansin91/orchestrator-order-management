@@ -75,7 +75,7 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { stores, dropshipping, offset, limit, date, start, end, shipping, status, page, shippingId } = req.query;
+      const { search, stores, dropshipping, offset, limit, date, start, end, shipping, status, page, shippingId } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -108,6 +108,9 @@ export class OrderController {
       }
       if (stores) {
         payload.stores = stores;
+      }
+      if (search) {
+        payload.search = search;
       }
       const response = await this.orderService.loadOrders(payload);
       res.status(response.status).json(response);

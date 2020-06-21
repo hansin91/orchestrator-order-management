@@ -10,4 +10,9 @@ export class ProductService {
     const pattern = { cmd: 'load-product-summary'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  loadProducts(payload: IPayload) {
+    const pattern = { cmd: 'load-products' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }
