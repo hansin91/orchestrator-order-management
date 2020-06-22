@@ -150,7 +150,7 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { stores, dropshipping, shipping, status, date, start, end } = req.query;
+      const { search, stores, dropshipping, shipping, status, date, start, end } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -171,6 +171,9 @@ export class OrderController {
       }
       if (stores) {
         payload.stores = stores;
+      }
+      if (search) {
+        payload.search = search;
       }
       const response = await this.orderService.loadTotalOrderTotalPage(payload);
       res.status(response.status).json(response);
@@ -186,7 +189,7 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { stores, dropshipping, shipping, status, date, start, end } = req.query;
+      const { search, stores, dropshipping, shipping, status, date, start, end } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -207,6 +210,9 @@ export class OrderController {
       }
       if (stores) {
         payload.stores = stores;
+      }
+      if (search) {
+        payload.search = search;
       }
       const response = await this.orderService.loadOrderShippings(payload);
       res.status(response.status).json(response);
@@ -222,7 +228,7 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { stores, dropshipping, shipping, status, date, start, end } = req.query;
+      const { search, stores, dropshipping, shipping, status, date, start, end } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -243,6 +249,9 @@ export class OrderController {
       }
       if (stores) {
         payload.stores = stores;
+      }
+      if (search) {
+        payload.search = search;
       }
       const response = await this.orderService.loadOrderStores(payload);
       res.status(response.status).json(response);
@@ -258,7 +267,7 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { stores, dropshipping, shipping, status, date, start, end } = req.query;
+      const { search, stores, dropshipping, shipping, status, date, start, end } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -279,6 +288,9 @@ export class OrderController {
       }
       if (stores) {
         payload.stores = stores;
+      }
+      if (search) {
+        payload.search = search;
       }
       const response = await this.orderService.loadOrderDropshipping(payload);
       res.status(response.status).json(response);
@@ -294,7 +306,7 @@ export class OrderController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { stores, dropshipping, status, shipping, date, start, end } = req.query;
+      const { search, stores, dropshipping, status, shipping, date, start, end } = req.query;
       if (date) {
         payload.date = date;
       }
@@ -315,6 +327,9 @@ export class OrderController {
       }
       if (stores) {
         payload.stores = stores;
+      }
+      if (search) {
+        payload.search = search;
       }
       const response = await this.orderService.loadOrderStatus(payload);
       res.status(response.status).json(response);
