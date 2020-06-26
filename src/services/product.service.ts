@@ -15,4 +15,9 @@ export class ProductService {
     const pattern = { cmd: 'load-products' };
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  setProductGroup(payload: IPayload) {
+    const pattern = { cmd: 'set-product-group' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }

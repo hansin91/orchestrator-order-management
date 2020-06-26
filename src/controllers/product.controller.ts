@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, HttpException } from '@nestjs/common';
+import { Controller, Get, Req, Res, HttpException, Patch, Body } from '@nestjs/common';
 import { Request, Response } from 'express';
 import {  ProductService } from '@services';
 
@@ -13,7 +13,7 @@ export class ProductController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { name, page, limit } = req.query;
+      const { group, raw, name, page, limit } = req.query;
       if (name) {
         payload.name = name;
       }
@@ -22,6 +22,12 @@ export class ProductController {
       }
       if (limit) {
         payload.limit = limit;
+      }
+      if (raw) {
+        payload.raw = raw;
+      }
+      if (group) {
+        payload.group = group;
       }
       const response = await this.productService.loadProducts(payload);
       res.status(response.status).json(response);
@@ -57,6 +63,22 @@ export class ProductController {
         payload.search = search;
       }
       const response = await this.productService.loadProductSummary(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Patch()
+  async setProductGroup(@Body() product: any, @Req() req: Request, @Res() res: Response) {
+    try {
+      const { headers: { authorization } } = req;
+      let payload;
+      payload = {
+        token: authorization.split(' ')[1],
+      };
+      payload.body = product;
+      const response = await this.productService.setProductGroup(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
