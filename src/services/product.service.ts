@@ -11,8 +11,18 @@ export class ProductService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadProductStores(payload: IPayload) {
+    const pattern = { cmd: 'load-product-stores'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
   loadProducts(payload: IPayload) {
     const pattern = { cmd: 'load-products' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  loadProduct(payload: IPayload) {
+    const pattern = { cmd: 'load-product-detail' };
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 

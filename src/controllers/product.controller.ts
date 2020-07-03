@@ -69,6 +69,22 @@ export class ProductController {
     }
   }
 
+  @Get('stores')
+  async loadProductStores(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      const { product_id } = req.query;
+      payload.product_id = product_id;
+      const response = await this.productService.loadProductStores(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
   @Patch()
   async setProductGroup(@Body() product: any, @Req() req: Request, @Res() res: Response) {
     try {
@@ -79,6 +95,22 @@ export class ProductController {
       };
       payload.body = product;
       const response = await this.productService.setProductGroup(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Get(':id')
+  async loadProductDetail(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      const { id } = req.params;
+      payload.id = id;
+      const response = await this.productService.loadProduct(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
