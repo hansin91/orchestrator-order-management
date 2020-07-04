@@ -13,7 +13,7 @@ export class ProductController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { group, raw, name, page, limit } = req.query;
+      const { group, product_id, raw, name, page, limit } = req.query;
       if (name) {
         payload.name = name;
       }
@@ -28,6 +28,9 @@ export class ProductController {
       }
       if (group) {
         payload.group = group;
+      }
+      if (product_id) {
+        payload.product_id = product_id;
       }
       const response = await this.productService.loadProducts(payload);
       res.status(response.status).json(response);
