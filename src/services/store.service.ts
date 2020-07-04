@@ -11,4 +11,9 @@ export class StoreService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadStores(payload: IPayload) {
+    const pattern = { cmd: 'load-stores' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }

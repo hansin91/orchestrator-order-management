@@ -6,6 +6,20 @@ import { StoreService } from '@services';
 export class StoreController {
   constructor(private readonly storeService: StoreService) {}
 
+  @Get()
+  async loadStores(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      const response = await this.storeService.loadStores(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
   @Get('shippings')
   async loadStoreShippings(@Req() req: Request, @Res() res: Response) {
     try {
