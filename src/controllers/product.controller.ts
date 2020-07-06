@@ -79,8 +79,17 @@ export class ProductController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { product_id } = req.query;
+      const { search, raw, product_id, store_id } = req.query;
       payload.product_id = product_id;
+      if (store_id) {
+        payload.store_id = store_id;
+      }
+      if (search) {
+        payload.search = search;
+      }
+      if (raw) {
+        payload.raw = raw;
+      }
       const response = await this.productService.loadProductStores(payload);
       res.status(response.status).json(response);
     } catch (error) {
