@@ -116,12 +116,12 @@ export class ProductController {
   @Get(':id')
   async loadProductDetail(@Req() req: Request, @Res() res: Response) {
     try {
+      const { id } = req.params;
       let payload;
       payload = {
         token: req.headers.authorization.split(' ')[1],
+        id,
       };
-      const { id } = req.params;
-      payload.id = id;
       const response = await this.productService.loadProduct(payload);
       res.status(response.status).json(response);
     } catch (error) {

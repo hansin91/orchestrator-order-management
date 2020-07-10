@@ -16,4 +16,9 @@ export class CategoryService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadCategory(payload: IPayload) {
+    const pattern = { cmd: 'load-category'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }

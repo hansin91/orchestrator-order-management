@@ -32,4 +32,19 @@ export class CategoryController {
       throw new HttpException(error, error.status);
     }
   }
+
+  @Get(':id')
+  async loadCategory(@Req() req: Request, @Res() res: Response) {
+    try {
+      const { id } = req.params;
+      const payload = {
+        token: req.headers.authorization.split(' ')[1],
+        id,
+      };
+      const response = await this.categoryService.loadCategory(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
 }
