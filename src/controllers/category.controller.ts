@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, HttpException, Req, Get, Put } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpException, Req, Get, Put, Delete } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { CategoryService } from '@services';
 
@@ -56,6 +56,21 @@ export class CategoryController {
         id,
       };
       const response = await this.categoryService.loadCategory(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Delete(':id')
+  async deleteCategory(@Req() req: Request, @Res() res: Response) {
+    try {
+      const { id } = req.params;
+      const payload = {
+        token: req.headers.authorization.split(' ')[1],
+        id,
+      };
+      const response = await this.categoryService.deleteCategory(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);

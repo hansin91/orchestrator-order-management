@@ -26,4 +26,9 @@ export class CategoryService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  deleteCategory(payload: IPayload) {
+    const pattern = { cmd: 'delete-category'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }
