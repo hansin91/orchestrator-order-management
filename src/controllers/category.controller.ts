@@ -37,9 +37,14 @@ export class CategoryController {
   @Get()
   async loadCategories(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {
+      let payload;
+      payload = {
         token: req.headers.authorization.split(' ')[1],
       };
+      const { includedParent } = req.query;
+      if (includedParent) {
+        payload.includedParent = includedParent;
+      }
       const response = await this.categoryService.loadCategories(payload);
       res.status(response.status).json(response);
     } catch (error) {
