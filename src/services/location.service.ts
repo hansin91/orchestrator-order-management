@@ -36,4 +36,19 @@ export class LocationService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadRacks(payload: IPayload) {
+    const pattern = { cmd: 'load-racks' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  createRack(payload: IPayload) {
+    const pattern = { cmd: 'create-rack' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  deleteRack(payload: IPayload) {
+    const pattern = { cmd: 'delete-rack'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }

@@ -25,6 +25,7 @@ import {
   ProductController,
   StoreController,
   RoomController,
+  RackController,
   WarehouseController,
 } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
@@ -122,6 +123,7 @@ import { rabbitMQOptions } from './rabbitMQ';
     ProductController,
     WarehouseController,
     RoomController,
+    RackController,
     PageController],
 })
 export class AppModule implements NestModule {
@@ -143,6 +145,7 @@ export class AppModule implements NestModule {
       ProductController,
       WarehouseController,
       RoomController,
+      RackController,
       OrderController);
   }
 }
