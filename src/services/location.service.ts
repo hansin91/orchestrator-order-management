@@ -11,4 +11,9 @@ export class LocationService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  createWarehouse(payload: IPayload) {
+    const pattern = { cmd: 'create-warehouse' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }
