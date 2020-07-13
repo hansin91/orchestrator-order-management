@@ -1,4 +1,4 @@
-import { Controller, Req, Res, Get, HttpException, Post, Body } from '@nestjs/common';
+import { Controller, Req, Res, Get, HttpException, Post, Body, Delete } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { LocationService } from '@services';
 
@@ -29,6 +29,21 @@ export class WarehouseController {
         body: warehouse,
       };
       const response = await this.warehouseService.createWarehouse(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Delete(':id')
+  async deleteWarehouse(@Req() req: Request, @Res() res: Response) {
+    try {
+      const { id } = req.params;
+      const payload = {
+        token: req.headers.authorization.split(' ')[1],
+        id,
+      };
+      const response = await this.warehouseService.deleteWarehouse(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);

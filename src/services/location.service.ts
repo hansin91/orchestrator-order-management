@@ -16,4 +16,9 @@ export class LocationService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  deleteWarehouse(payload: IPayload) {
+    const pattern = { cmd: 'delete-warehouse'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }
