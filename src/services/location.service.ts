@@ -21,4 +21,19 @@ export class LocationService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadRooms(payload: IPayload) {
+    const pattern = { cmd: 'load-rooms' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  createRoom(payload: IPayload) {
+    const pattern = { cmd: 'create-room' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  deleteRoom(payload: IPayload) {
+    const pattern = { cmd: 'delete-room'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }
