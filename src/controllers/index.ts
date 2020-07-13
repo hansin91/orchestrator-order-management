@@ -7,3 +7,4 @@ export * from './shipping.controller';
 export * from './page.controller';
 export * from './product.controller';
 export * from './store.controller';
+export * from './warehouse.controller';
