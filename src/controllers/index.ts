@@ -10,3 +10,4 @@ export * from './store.controller';
 export * from './warehouse.controller';
 export * from './room.controller';
 export * from './rack.controller';
+export * from './location.controller';

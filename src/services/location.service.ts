@@ -51,4 +51,19 @@ export class LocationService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadLocations(payload: IPayload) {
+    const pattern = { cmd: 'load-locations' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  createLocation(payload: IPayload) {
+    const pattern = { cmd: 'create-location' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  deleteLocation(payload: IPayload) {
+    const pattern = { cmd: 'delete-location'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
 }

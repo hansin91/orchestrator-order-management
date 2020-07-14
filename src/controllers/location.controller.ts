@@ -2,18 +2,31 @@ import { Controller, Req, Res, Get, HttpException, Post, Body, Delete } from '@n
 import { Request, Response } from 'express';
 import { LocationService } from '@services';
 
-@Controller('racks')
-export class RackController {
-  constructor(private readonly rackService: LocationService) {}
+@Controller('locations')
+export class LocationController {
+  constructor(private readonly locationService: LocationService) {}
 
   @Get()
-  async loadRacks(@Req() req: Request, @Res() res: Response) {
+  async loadLocations(@Req() req: Request, @Res() res: Response) {
     try {
       let payload;
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const response = await this.rackService.loadRacks(payload);
+      const { name, warehouse_id, rack_id, room_id } = req.query;
+      if (name) {
+        payload.name = name;
+      }
+      if (warehouse_id) {
+        payload.warehouse_id = warehouse_id;
+      }
+      if (rack_id) {
+        payload.rack_id = rack_id;
+      }
+      if (room_id) {
+        payload.room_id = room_id;
+      }
+      const response = await this.locationService.loadLocations(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
@@ -21,14 +34,14 @@ export class RackController {
   }
 
   @Post()
-  async createRack(@Body() rack: any, @Req() req: Request, @Res() res: Response) {
+  async createLocation(@Body() location: any, @Req() req: Request, @Res() res: Response) {
     try {
       let payload;
       payload = {
         token: req.headers.authorization.split(' ')[1],
-        body: rack,
+        body: location,
       };
-      const response = await this.rackService.createRack(payload);
+      const response = await this.locationService.createLocation(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
@@ -36,14 +49,14 @@ export class RackController {
   }
 
   @Delete(':id')
-  async deleteRack(@Req() req: Request, @Res() res: Response) {
+  async deleteLocation(@Req() req: Request, @Res() res: Response) {
     try {
       const { id } = req.params;
       const payload = {
         token: req.headers.authorization.split(' ')[1],
         id,
       };
-      const response = await this.rackService.deleteRack(payload);
+      const response = await this.locationService.deleteLocation(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
