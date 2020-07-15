@@ -13,9 +13,12 @@ export class ProductController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { groups, group, product_id, raw, name, page, limit } = req.query;
+      const { groups, unassigned, group, product_id, raw, name, page, limit } = req.query;
       if (name) {
         payload.name = name;
+      }
+      if (unassigned) {
+        payload.unassigned = unassigned;
       }
       if (page) {
         payload.page = page;
