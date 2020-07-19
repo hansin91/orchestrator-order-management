@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, HttpException, Patch, Body, Put } from '@nestjs/common';
+import { Controller, Get, Req, Res, HttpException, Patch, Body, Put, Post } from '@nestjs/common';
 import { Request, Response } from 'express';
 import {  ProductService } from '@services';
 
@@ -16,6 +16,22 @@ export class ProductController {
       };
       payload.body = product;
       const response = await this.productService.editProductStore(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Post('stores')
+  async createProductStore(@Body() product: any, @Req() req: Request, @Res() res: Response) {
+    try {
+      const { headers: { authorization } } = req;
+      let payload;
+      payload = {
+        token: authorization.split(' ')[1],
+      };
+      payload.body = product;
+      const response = await this.productService.createProductStore(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
