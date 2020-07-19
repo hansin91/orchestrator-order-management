@@ -30,4 +30,9 @@ export class ProductService {
     const pattern = { cmd: 'set-product-group' };
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  editProductStore(payload: IPayload) {
+    const pattern = { cmd: 'edit-product-store' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }
