@@ -13,6 +13,7 @@ import {
   ProductService,
   StoreService,
   LocationService,
+  ProductQueueService,
 } from '@services';
 import {
   AuthController,
@@ -30,7 +31,7 @@ import {
   LocationController,
 } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
-import { rabbitMQOptions } from './rabbitMQ';
+import { rabbitMQOptions, rabbitMQProductOptions } from './rabbitMQ';
 
 @Module({
   imports: [
@@ -100,6 +101,12 @@ import { rabbitMQOptions } from './rabbitMQ';
         ...rabbitMQOptions,
       },
     ]),
+    ClientsModule.register([
+      {
+        name: 'PRODUCT_QUEUE_SERVICE',
+        ...rabbitMQProductOptions,
+      },
+    ]),
   ],
   providers: [
     AuthService,
@@ -110,6 +117,7 @@ import { rabbitMQOptions } from './rabbitMQ';
     QueueService,
     StatusService,
     ProductService,
+    ProductQueueService,
     StoreService,
     LocationService,
     PageService],
