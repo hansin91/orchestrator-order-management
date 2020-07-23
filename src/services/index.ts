@@ -11,3 +11,4 @@ export * from './store.service';
 export * from './location.service';
 export * from './product.queue.service';
 export * from './price.service';
+export * from './stock.service';

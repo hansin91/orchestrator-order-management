@@ -12,3 +12,4 @@ export * from './room.controller';
 export * from './rack.controller';
 export * from './location.controller';
 export * from './price.controller';
+export * from './stock.controller';
