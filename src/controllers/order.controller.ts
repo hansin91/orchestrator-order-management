@@ -420,4 +420,34 @@ export class OrderController {
     }
   }
 
+  @Patch('upload')
+  async updateFile(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      payload.body = req.body;
+      const response = await this.queueService.updateUploadedFile(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Post('mass')
+  async saveOrderMass(@Req() req: Request, @Res() res: Response) {
+    try {
+      let payload;
+      payload = {
+        token: req.headers.authorization.split(' ')[1],
+      };
+      payload.body = req.body;
+      const response = await this.queueService.saveMassOrder(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
 }

@@ -15,4 +15,14 @@ export class QueueService {
     const pattern = { cmd: 'save-bulk-order'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  updateUploadedFile(payload: IPayload) {
+    const pattern = { cmd: 'update-uploaded-file' };
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  saveMassOrder(payload: IPayload) {
+    const pattern = {cmd: 'save-mass-order'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }

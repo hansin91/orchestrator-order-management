@@ -70,5 +70,4 @@ export class OrderService {
     const pattern = {cmd: 'uploaded-orders'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
-
 }
