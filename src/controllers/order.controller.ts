@@ -379,6 +379,21 @@ export class OrderController {
     }
   }
 
+  @Get('upload/:id')
+  async loadUploadedFile(@Req() req: Request, @Res() res: Response) {
+    try {
+      const id = Number(req.params.id);
+      const payload = {
+        token: req.headers.authorization.split(' ')[1],
+        id,
+      };
+      const response = await this.uploadedFileService.findUploadedFile(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
   @Get('upload')
   async loadUploadedFiles(@Req() req: Request, @Res() res: Response) {
     try {

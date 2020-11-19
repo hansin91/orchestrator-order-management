@@ -10,4 +10,9 @@ export class UploadedFileService {
     const pattern = {cmd: 'uploaded-files'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  findUploadedFile(payload: IPayload) {
+    const pattern = {cmd: 'uploaded-file'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }
