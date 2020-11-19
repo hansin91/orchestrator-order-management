@@ -1,11 +1,12 @@
 import { Controller, Get, Req, Res, HttpException, Post, Put, Patch } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { OrderService, QueueService } from '@services';
+import { OrderService, QueueService, UploadedFileService } from '@services';
 
 @Controller('orders')
 export class OrderController {
   constructor(
     private readonly queueService: QueueService,
+    private readonly uploadedFileService: UploadedFileService,
     private readonly orderService: OrderService) {}
 
   @Post()
@@ -379,7 +380,7 @@ export class OrderController {
   }
 
   @Get('upload')
-  async loadUploadedOrders(@Req() req: Request, @Res() res: Response) {
+  async loadUploadedFiles(@Req() req: Request, @Res() res: Response) {
     try {
       let payload;
       payload = {
@@ -395,7 +396,7 @@ export class OrderController {
       if (limit) {
         payload.limit = limit;
       }
-      const response = await this.orderService.loadUploadedOrders(payload);
+      const response = await this.uploadedFileService.loadUploadedFiles(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);

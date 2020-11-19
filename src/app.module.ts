@@ -16,6 +16,7 @@ import {
   PriceService,
   ProductQueueService,
   StockService,
+  UploadedFileService,
 } from '@services';
 import {
   AuthController,
@@ -39,6 +40,12 @@ import { rabbitMQOptions, rabbitMQProductOptions } from './rabbitMQ';
 
 @Module({
   imports: [
+    ClientsModule.register([
+      {
+        name: 'UPLOADED_FILE_SERVICE',
+        ...clientOptions,
+      },
+    ]),
     ClientsModule.register([
       {
         name: 'AUTH_SERVICE',
@@ -138,7 +145,9 @@ import { rabbitMQOptions, rabbitMQProductOptions } from './rabbitMQ';
     LocationService,
     PriceService,
     StockService,
-    PageService],
+    PageService,
+    UploadedFileService,
+  ],
   controllers: [
     AuthController,
     CategoryController,

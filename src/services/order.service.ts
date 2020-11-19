@@ -65,9 +65,4 @@ export class OrderService {
     const pattern = { cmd: 'order-pages'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
-
-  loadUploadedOrders(payload: IPayload) {
-    const pattern = {cmd: 'uploaded-orders'};
-    return this.clientService.send<any>(pattern, payload).toPromise();
-  }
 }
