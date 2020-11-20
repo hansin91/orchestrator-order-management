@@ -16,8 +16,8 @@ export class QueueService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
-  updateUploadedFile(payload: IPayload) {
-    const pattern = { cmd: 'update-uploaded-file' };
+  startMassOrder(payload: IPayload) {
+    const pattern = { cmd: 'start-mass-order' };
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 

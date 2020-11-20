@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, HttpException, Post, Put, Patch } from '@nestjs/common';
+import { Controller, Delete, Get, Req, Res, HttpException, Post, Put, Patch } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { OrderService, QueueService, UploadedFileService } from '@services';
 
@@ -436,15 +436,45 @@ export class OrderController {
     }
   }
 
-  @Patch('upload')
-  async updateFile(@Req() req: Request, @Res() res: Response) {
+  @Patch('upload/:id')
+  async updateUploadedFile(@Req() req: Request, @Res() res: Response) {
     try {
-      let payload;
-      payload = {
+      const id = Number(req.params.id);
+      const payload = {
         token: req.headers.authorization.split(' ')[1],
+        body: req.body,
+        id,
       };
-      payload.body = req.body;
-      const response = await this.queueService.updateUploadedFile(payload);
+      const response = await this.uploadedFileService.updateUploadedFile(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Delete('upload/:id')
+  async deleteUploadedFile(@Req() req: Request, @Res() res: Response) {
+    try {
+      const id = Number(req.params.id);
+      const payload = {
+        token: req.headers.authorization.split(' ')[1],
+        id,
+      };
+      const response = await this.uploadedFileService.deleteUploadedFile(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Patch('mass')
+  async startMassOrder(@Req() req: Request, @Res() res: Response) {
+    try {
+      const payload = {
+        token: req.headers.authorization.split(' ')[1],
+        body: req.body,
+      };
+      const response = await this.queueService.startMassOrder(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);

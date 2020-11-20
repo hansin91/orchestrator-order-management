@@ -11,6 +11,16 @@ export class UploadedFileService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  updateUploadedFile(payload: IPayload) {
+    const pattern = {cmd: 'update-uploaded-file'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  deleteUploadedFile(payload: IPayload) {
+    const pattern = {cmd: 'delete-uploaded-file'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
   findUploadedFile(payload: IPayload) {
     const pattern = {cmd: 'uploaded-file'};
     return this.clientService.send<any>(pattern, payload).toPromise();
