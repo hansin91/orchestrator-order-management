@@ -14,11 +14,11 @@ export const rabbitMQOptions: ClientOptions = {
   },
 };
 
-export const rabbitMQProductOptions: ClientOptions = {
+export const rabbitMQUploadedOrderOptions: ClientOptions = {
   transport: Transport.RMQ,
   options: {
     urls: ['amqp://' + USERNAME + ':' + PASSWORD + '@' + HOST + ':' + PORT],
-    queue: process.env.RABBITMQ_PRODUCT_QUEUE,
+    queue: process.env.RABBITMQ_UPLOADED_ORDER_QUEUE,
     queueOptions: {
       durable: false,
     },

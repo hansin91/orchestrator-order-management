@@ -14,8 +14,7 @@ import {
   StoreService,
   LocationService,
   PriceService,
-  ProductQueueService,
-  StockService,
+  UploadedOrderService,
   UploadedFileService,
 } from '@services';
 import {
@@ -33,10 +32,10 @@ import {
   WarehouseController,
   LocationController,
   PriceController,
-  StockController,
+  UploadedOrderController,
 } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
-import { rabbitMQOptions, rabbitMQProductOptions } from './rabbitMQ';
+import { rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
 
 @Module({
   imports: [
@@ -114,20 +113,14 @@ import { rabbitMQOptions, rabbitMQProductOptions } from './rabbitMQ';
     ]),
     ClientsModule.register([
       {
-        name: 'STOCK_SERVICE',
-        ...clientOptions,
-      },
-    ]),
-    ClientsModule.register([
-      {
         name: 'QUEUE_SERVICE',
         ...rabbitMQOptions,
       },
     ]),
     ClientsModule.register([
       {
-        name: 'PRODUCT_QUEUE_SERVICE',
-        ...rabbitMQProductOptions,
+        name: 'UPLOADED_ORDER_SERVICE',
+        ...rabbitMQUploadedOrderOptions,
       },
     ]),
   ],
@@ -140,11 +133,10 @@ import { rabbitMQOptions, rabbitMQProductOptions } from './rabbitMQ';
     QueueService,
     StatusService,
     ProductService,
-    ProductQueueService,
+    UploadedOrderService,
     StoreService,
     LocationService,
     PriceService,
-    StockService,
     PageService,
     UploadedFileService,
   ],
@@ -161,9 +153,9 @@ import { rabbitMQOptions, rabbitMQProductOptions } from './rabbitMQ';
     RoomController,
     RackController,
     PriceController,
-    StockController,
     LocationController,
-    PageController],
+    PageController,
+    UploadedOrderController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -186,8 +178,8 @@ export class AppModule implements NestModule {
       RoomController,
       RackController,
       LocationController,
-      StockController,
       PriceController,
+      UploadedOrderController,
       OrderController);
   }
 }
