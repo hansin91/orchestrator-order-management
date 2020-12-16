@@ -6,15 +6,33 @@ import {  ProductService } from '@services';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Get('unmapped')
+  async loadUnmappedProducts(@Req() req: Request, @Res() res: Response) {
+    try {
+      const {name, limit, page, groupId} = req.query;
+      const { headers: { authorization } } = req;
+      const payload = {
+        token: authorization.split(' ')[1],
+        name: name ? name : '',
+        page: page ? page : 1,
+        limit,
+        groupId: groupId ? groupId : '',
+      };
+      const response = await this.productService.loadUnmappedProducts(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
   @Put('stores')
   async editProductStore(@Body() product: any, @Req() req: Request, @Res() res: Response) {
     try {
       const { headers: { authorization } } = req;
-      let payload;
-      payload = {
+      const payload = {
         token: authorization.split(' ')[1],
+        body: product,
       };
-      payload.body = product;
       const response = await this.productService.editProductStore(payload);
       res.status(response.status).json(response);
     } catch (error) {
@@ -26,11 +44,10 @@ export class ProductController {
   async createProductStore(@Body() product: any, @Req() req: Request, @Res() res: Response) {
     try {
       const { headers: { authorization } } = req;
-      let payload;
-      payload = {
+      const payload = {
         token: authorization.split(' ')[1],
+        body: product,
       };
-      payload.body = product;
       const response = await this.productService.createProductStore(payload);
       res.status(response.status).json(response);
     } catch (error) {
