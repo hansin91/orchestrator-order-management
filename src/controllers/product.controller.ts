@@ -62,7 +62,7 @@ export class ProductController {
       payload = {
         token: req.headers.authorization.split(' ')[1],
       };
-      const { groups, categories, locations, warehouses, rooms, racks, unassigned, group, product_id, raw, name, page, limit } = req.query;
+      const { bulk, groups, categories, locations, warehouses, rooms, racks, unassigned, group, id, raw, name, page, limit, ids } = req.query;
       if (name) {
         payload.name = name;
       }
@@ -81,8 +81,8 @@ export class ProductController {
       if (group) {
         payload.group = group;
       }
-      if (product_id) {
-        payload.product_id = product_id;
+      if (id) {
+        payload.id = id;
       }
       if (groups) {
         payload.groups = groups;
@@ -101,6 +101,12 @@ export class ProductController {
       }
       if (racks) {
         payload.racks = racks;
+      }
+      if (ids) {
+        payload.ids = ids;
+      }
+      if (bulk) {
+        payload.bulk = bulk;
       }
       const response = await this.productService.loadProducts(payload);
       res.status(response.status).json(response);
