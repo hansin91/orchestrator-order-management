@@ -45,4 +45,9 @@ export class ProductService {
     const pattern = { cmd: 'create-product-store' };
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  mappingProducts(payload: IPayload) {
+    const pattern = { cmd: 'mapping-products'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }

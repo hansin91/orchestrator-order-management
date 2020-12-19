@@ -55,6 +55,21 @@ export class ProductController {
     }
   }
 
+  @Post('mapped')
+  async mappingProducts(@Body() body: any, @Req() req: Request, @Res() res: Response) {
+    try {
+      const { headers: { authorization } } = req;
+      const payload = {
+        token: authorization.split(' ')[1],
+        body,
+      };
+      const response = await this.productService.mappingProducts(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
   @Get()
   async loadProducts(@Req() req: Request, @Res() res: Response) {
     try {
