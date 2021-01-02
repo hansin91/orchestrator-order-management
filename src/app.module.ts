@@ -16,6 +16,7 @@ import {
   PriceService,
   UploadedOrderService,
   UploadedFileService,
+  ShopeeService,
 } from '@services';
 import {
   AuthController,
@@ -54,6 +55,12 @@ import { rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
     ClientsModule.register([
       {
         name: 'CATEGORY_SERVICE',
+        ...clientOptions,
+      },
+    ]),
+    ClientsModule.register([
+      {
+        name: 'SHOPEE_SERVICE',
         ...clientOptions,
       },
     ]),
@@ -139,6 +146,7 @@ import { rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
     PriceService,
     PageService,
     UploadedFileService,
+    ShopeeService,
   ],
   controllers: [
     AuthController,
