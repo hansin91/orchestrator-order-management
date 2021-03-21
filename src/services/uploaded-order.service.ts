@@ -7,7 +7,7 @@ export class UploadedOrderService {
   constructor(@Inject('UPLOADED_ORDER_SERVICE') private readonly clientService: ClientProxy){}
 
   createUploadedOrders(payload: IPayload) {
-    const pattern = { cmd: 'create-uploaded-orders'};
-    return this.clientService.send<any>(pattern, payload).toPromise();
+    const event = 'create-uploaded-orders';
+    return this.clientService.send<any>(event, payload).toPromise();
   }
 }

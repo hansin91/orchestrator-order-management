@@ -7,22 +7,22 @@ export class QueueService {
   constructor(@Inject('QUEUE_SERVICE') private readonly clientService: ClientProxy){}
 
   saveOrder(payload: IPayload) {
-    const pattern = { cmd: 'save-order'};
-    return this.clientService.send<any>(pattern, payload).toPromise();
+    const event = 'save-order';
+    return this.clientService.send<any>(event, payload).toPromise();
   }
 
   saveBulkOrder(payload: IPayload) {
-    const pattern = { cmd: 'save-bulk-order'};
-    return this.clientService.send<any>(pattern, payload).toPromise();
+    const event = 'save-bulk-order';
+    return this.clientService.send<any>(event, payload).toPromise();
   }
 
   startMassOrder(payload: IPayload) {
-    const pattern = { cmd: 'start-mass-order' };
-    return this.clientService.send<any>(pattern, payload).toPromise();
+    const event = 'start-mass-order';
+    return this.clientService.send<any>(event, payload).toPromise();
   }
 
   saveMassOrder(payload: IPayload) {
-    const pattern = {cmd: 'save-mass-order'};
-    return this.clientService.send<any>(pattern, payload).toPromise();
+    const event = 'save-mass-order';
+    return this.clientService.send<any>(event, payload).toPromise();
   }
 }
