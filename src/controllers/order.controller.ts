@@ -12,10 +12,7 @@ export class OrderController {
   @Post()
   async saveOrder(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {
-        token: req.headers.authorization.split(' ')[1],
-        body: req.body,
-      };
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
       const response = await this.queueService.saveOrder(payload);
       res.status(response.status).json(response);
     } catch (error) {
@@ -26,10 +23,7 @@ export class OrderController {
   @Patch()
   async printOrders(@Req() req: Request, @Res() res: Response){
     try {
-      const payload = {
-        token: req.headers.authorization.split(' ')[1],
-        body: req.body,
-      };
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
       const response = await this.orderService.printOrders(payload);
       res.status(response.status).json(response);
     } catch (error) {
@@ -40,10 +34,7 @@ export class OrderController {
   @Put()
   async editOrder(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {
-        token: req.headers.authorization.split(' ')[1],
-        body: req.body,
-      };
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
       const response = await this.orderService.editOrder(payload);
       res.status(response.status).json(response);
     } catch (error) {
@@ -54,10 +45,7 @@ export class OrderController {
   @Post('bulk')
   async saveBulkOrder(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {
-        token: req.headers.authorization.split(' ')[1],
-        body: req.body,
-      };
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
       const response = await this.queueService.saveBulkOrder(payload);
       res.status(response.status).json(response);
     } catch (error) {
