@@ -15,4 +15,9 @@ export class ShippingService {
     const pattern = { cmd: 'load-shipping-orders'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  loadShopeeShippings(payload: IPayload) {
+    const pattern = { cmd: 'load-shopee-shippings'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }
