@@ -9,7 +9,7 @@ export class ShippingController {
   @Get()
   async loadShippings(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = { token: req.headers.authorization.split(' ')[1] };
+      const payload = {token: req.headers.authorization.split(' ')[1]};
       const response = await this.shippingService.loadShippings(payload);
       res.status(response.status).json(response);
     } catch (error) {
@@ -53,6 +53,18 @@ export class ShippingController {
         payload.testing = testing;
       }
       const response = await this.shippingService.loadShopeeShippings(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Get(':orderNumber/message')
+  async loadShippingMessage(@Req() req: Request, @Res() res: Response) {
+    try {
+      const {orderNumber} = req.params;
+      const payload = {token: req.headers.authorization.split(' ')[1], orderNumber};
+      const response = await this.shippingService.loadShippingMessage(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);

@@ -7,17 +7,22 @@ export class ShippingService {
   constructor(@Inject('SHIPPING_SERVICE') private readonly clientService: ClientProxy) {}
 
   loadShippings(payload: IPayload) {
-    const pattern = { cmd: 'load-shippings'};
+    const pattern = {cmd: 'load-shippings'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
   loadShippingOrders(payload: IPayload) {
-    const pattern = { cmd: 'load-shipping-orders'};
+    const pattern = {cmd: 'load-shipping-orders'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
   loadShopeeShippings(payload: IPayload) {
-    const pattern = { cmd: 'load-shopee-shippings'};
+    const pattern = {cmd: 'load-shopee-shippings'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  loadShippingMessage(payload: IPayload) {
+    const pattern = {cmd: 'load-shipping-message'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 }

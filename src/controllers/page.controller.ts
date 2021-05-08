@@ -9,11 +9,7 @@ export class PageController {
   @Patch()
   async lockOrders(@Req() req: Request, @Res() res: Response) {
     try {
-      let payload;
-      payload = {
-        token: req.headers.authorization.split(' ')[1],
-      };
-      payload.body = req.body;
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
       const response = await this.pageService.lockDate(payload);
       res.status(response.status).json(response);
     } catch (error) {
