@@ -65,4 +65,9 @@ export class OrderService {
     const pattern = { cmd: 'order-pages'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
+
+  processMassOrderDetail(payload: IPayload) {
+    const pattern = { cmd: 'mass-order-detail'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
 }

@@ -16,7 +16,7 @@ import {
   PriceService,
   UploadedOrderService,
   UploadedFileService,
-  ShopeeService,
+  OrderDetailService,
 } from '@services';
 import {
   AuthController,
@@ -34,9 +34,10 @@ import {
   LocationController,
   PriceController,
   UploadedOrderController,
+  UploadedFileController,
 } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
-import { rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
+import { rabbitMQOrderDetailOptions, rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
 
 @Module({
   imports: [
@@ -130,6 +131,12 @@ import { rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
         ...rabbitMQUploadedOrderOptions,
       },
     ]),
+    ClientsModule.register([
+      {
+        name: 'ORDER_DETAIL_SERVICE',
+        ...rabbitMQOrderDetailOptions,
+      },
+    ]),
   ],
   providers: [
     AuthService,
@@ -146,7 +153,7 @@ import { rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
     PriceService,
     PageService,
     UploadedFileService,
-    ShopeeService,
+    OrderDetailService,
   ],
   controllers: [
     AuthController,
@@ -163,6 +170,7 @@ import { rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
     PriceController,
     LocationController,
     PageController,
+    UploadedFileController,
     UploadedOrderController],
 })
 export class AppModule implements NestModule {
@@ -188,6 +196,7 @@ export class AppModule implements NestModule {
       LocationController,
       PriceController,
       UploadedOrderController,
+      UploadedFileController,
       OrderController);
   }
 }

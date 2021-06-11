@@ -13,3 +13,4 @@ export * from './rack.controller';
 export * from './location.controller';
 export * from './price.controller';
 export * from './uploaded-order.controller';
+export * from './uploaded-file.controller';

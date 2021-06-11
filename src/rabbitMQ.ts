@@ -24,3 +24,14 @@ export const rabbitMQUploadedOrderOptions: ClientOptions = {
     },
   },
 };
+
+export const rabbitMQOrderDetailOptions: ClientOptions = {
+  transport: Transport.RMQ,
+  options: {
+    urls: ['amqp://' + USERNAME + ':' + PASSWORD + '@' + HOST + ':' + PORT],
+    queue: process.env.RABBITMQ_ORDER_DETAIL_QUEUE,
+    queueOptions: {
+      durable: false,
+    },
+  },
+};

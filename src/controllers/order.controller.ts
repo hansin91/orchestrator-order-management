@@ -1,12 +1,13 @@
 import { Controller, Delete, Get, Req, Res, HttpException, Post, Put, Patch } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { OrderService, QueueService, UploadedFileService } from '@services';
+import { OrderDetailService, OrderService, QueueService, UploadedFileService } from '@services';
 
 @Controller('orders')
 export class OrderController {
   constructor(
     private readonly queueService: QueueService,
     private readonly uploadedFileService: UploadedFileService,
+    private readonly orderDetailService: OrderDetailService,
     private readonly orderService: OrderService) {}
 
   @Post()
@@ -473,6 +474,17 @@ export class OrderController {
         body: req.body,
       };
       const response = await this.queueService.saveMassOrder(payload);
+      res.status(response.status).json(response);
+    } catch (error) {
+      throw new HttpException(error, error.status);
+    }
+  }
+
+  @Post('details')
+  async insertOrderDetail(@Req() req: Request, @Res() res: Response) {
+    try {
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
+      const response = await this.orderDetailService.insertOrderDetail(payload);
       res.status(response.status).json(response);
     } catch (error) {
       throw new HttpException(error, error.status);
