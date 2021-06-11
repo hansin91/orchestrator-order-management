@@ -21,6 +21,11 @@ export class CategoryService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadShopeeCategories(payload: IPayload) {
+    const pattern = {cmd: 'load-shopee-categories'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
   loadCategory(payload: IPayload) {
     const pattern = { cmd: 'load-category'};
     return this.clientService.send<any>(pattern, payload).toPromise();
@@ -28,6 +33,16 @@ export class CategoryService {
 
   deleteCategory(payload: IPayload) {
     const pattern = { cmd: 'delete-category'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  loadCategoryAttributes(payload: IPayload) {
+    const pattern = { cmd: 'load-category-attributes'};
+    return this.clientService.send<any>(pattern, payload).toPromise();
+  }
+
+  loadShopeeCategoryAttributes(payload: IPayload) {
+    const pattern = { cmd: 'load-shopee-category-attributes'};
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
