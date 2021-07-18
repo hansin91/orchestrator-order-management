@@ -9,7 +9,7 @@ export const rabbitMQOptions: ClientOptions = {
     urls: ['amqp://' + USERNAME + ':' + PASSWORD + '@' + HOST + ':' + PORT],
     queue: process.env.RABBITMQ_QUEUE,
     queueOptions: {
-      durable: false,
+      durable: true,
     },
   },
 };
@@ -20,7 +20,7 @@ export const rabbitMQUploadedOrderOptions: ClientOptions = {
     urls: ['amqp://' + USERNAME + ':' + PASSWORD + '@' + HOST + ':' + PORT],
     queue: process.env.RABBITMQ_UPLOADED_ORDER_QUEUE,
     queueOptions: {
-      durable: false,
+      durable: true,
     },
   },
 };
@@ -31,7 +31,7 @@ export const rabbitMQOrderDetailOptions: ClientOptions = {
     urls: ['amqp://' + USERNAME + ':' + PASSWORD + '@' + HOST + ':' + PORT],
     queue: process.env.RABBITMQ_ORDER_DETAIL_QUEUE,
     queueOptions: {
-      durable: false,
+      durable: true,
     },
   },
 };
