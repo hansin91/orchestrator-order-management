@@ -1,6 +1,8 @@
-import { Controller, Delete, Get, Req, Res, HttpException, Post, Put, Patch } from '@nestjs/common';
-import { Request, Response } from 'express';
-import { OrderDetailService, OrderService, QueueService, UploadedFileService } from '@services';
+import { Controller, Delete, Get, Req, Res, HttpException, Post, Put, Patch, HttpStatus } from '@nestjs/common'
+import { Request, Response } from 'express'
+import { OrderDetailService, OrderService, QueueService, UploadedFileService } from '@services'
+import { FileProducerService, OrderProducerService } from '../producers'
+
 
 @Controller('orders')
 export class OrderController {
@@ -8,7 +10,9 @@ export class OrderController {
     private readonly queueService: QueueService,
     private readonly uploadedFileService: UploadedFileService,
     private readonly orderDetailService: OrderDetailService,
-    private readonly orderService: OrderService) {}
+    private readonly orderService: OrderService,
+    private readonly orderProducerService: OrderProducerService,
+    private readonly fileProducerService: FileProducerService) {}
 
   @Post()
   async saveOrder(@Req() req: Request, @Res() res: Response) {
@@ -455,28 +459,24 @@ export class OrderController {
   @Patch('mass')
   async startMassOrder(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {
-        token: req.headers.authorization.split(' ')[1],
-        body: req.body,
-      };
-      const response = await this.queueService.startMassOrder(payload);
-      res.status(response.status).json(response);
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body}
+      const job = await this.fileProducerService.sendMessage(payload)
+      const response = await job.finished()
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 
   @Post('mass')
   async saveOrderMass(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {
-        token: req.headers.authorization.split(' ')[1],
-        body: req.body,
-      };
-      const response = await this.queueService.saveMassOrder(payload);
-      res.status(response.status).json(response);
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body}
+      const job = await this.orderProducerService.massOrder(payload)
+      // const response = await this.queueService.saveMassOrder(payload)
+      res.status(HttpStatus.OK).json('completed')
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 

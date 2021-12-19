@@ -1,5 +1,6 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
+import { BullModule  } from '@nestjs/bull'
 import { clientOptions } from './client';
 import {
   AuthService,
@@ -16,8 +17,9 @@ import {
   PriceService,
   UploadedOrderService,
   UploadedFileService,
-  OrderDetailService,
+  OrderDetailService
 } from '@services';
+import { UploadProducerService, FileProducerService, OrderProducerService } from './producers'
 import {
   AuthController,
   CategoryController,
@@ -38,9 +40,18 @@ import {
 } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
 import { rabbitMQOrderDetailOptions, rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
+import { Queue } from './queue'
 
 @Module({
   imports: [
+    BullModule.forRoot({
+      ...Queue
+    }),
+    BullModule.registerQueue(
+      {name: 'file-queue'},
+      {name: 'upload-queue'},
+      {name: 'order-queue'}
+    ),
     ClientsModule.register([
       {
         name: 'UPLOADED_FILE_SERVICE',
@@ -154,6 +165,9 @@ import { rabbitMQOrderDetailOptions, rabbitMQOptions, rabbitMQUploadedOrderOptio
     PageService,
     UploadedFileService,
     OrderDetailService,
+    FileProducerService,
+    OrderProducerService,
+    UploadProducerService
   ],
   controllers: [
     AuthController,
