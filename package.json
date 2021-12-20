@@ -13,7 +13,7 @@
     "prestart:prod": "rimraf dist && tsc",
     "start:prod": "node -r module-alias/register dist/main.js",
     "start:pm2": "pm2 start npm --name 'orchestrator' -- run start:prod",
-    "restart:pm2": "git pull origin master && pm2 stop orchestrator && pm2 delete orchestrator && pm2 start npm --name 'orchestrator' -- run start:prod",
+    "restart:pm2": "pm2 stop orchestrator && pm2 delete orchestrator && pm2 start npm --name 'orchestrator' -- run start:prod",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
