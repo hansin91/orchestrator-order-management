@@ -9,7 +9,7 @@ export class OrderProducerService {
   async massOrder(message: any) {
     const job = await this.queue.add('order-job', message, {
       removeOnComplete: true,
-      attempts: 1
+      attempts: 3
     })
     return job
   }

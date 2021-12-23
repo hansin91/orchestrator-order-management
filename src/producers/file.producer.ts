@@ -9,7 +9,8 @@ export class FileProducerService {
   async sendMessage(message: any) {
     const job = await this.queue.add('file-job', message, {
       removeOnComplete: true,
-      attempts: 1
+      attempts: 3,
+      stackTraceLimit: 20
     })
     return job
   }

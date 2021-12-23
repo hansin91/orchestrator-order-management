@@ -9,7 +9,7 @@ export class UploadProducerService {
   async sendMessage(message: any) {
     const job = await this.queue.add('upload-job', message, {
       removeOnComplete: true,
-      attempts: 1
+      attempts: 3
     })
     return job
   }
