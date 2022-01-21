@@ -54,6 +54,7 @@ export class OrderController {
       const response = await this.queueService.saveBulkOrder(payload);
       res.status(response.status).json(response);
     } catch (error) {
+      console.log(error, '------- ***** ------')
       throw new HttpException(error, error.status);
     }
   }
@@ -331,22 +332,26 @@ export class OrderController {
   @Get('print')
   async loadPrintedOrders(@Req() req: Request, @Res() res: Response) {
     try {
-      let payload;
-      payload = {
-        token: req.headers.authorization.split(' ')[1],
-      };
-      const { date, page, isSummary } = req.query;
+      let payload
+      payload = {token: req.headers.authorization.split(' ')[1]}
+      const { type, date, page, isSummary } = req.query
       if (date) {
-        payload.date = date;
+        payload.date = date
       }
       if (page) {
-        payload.page = page;
+        payload.page = page
       }
-      payload.isSummary = isSummary;
-      const response = await this.orderService.loadPrintedOrders(payload);
-      res.status(response.status).json(response);
+      payload.isSummary = isSummary
+      let response = {} as any
+      if (type) {
+        payload.type = type
+        response = await this.orderService.loadThermalOrders(payload)
+      } else {
+        response = await this.orderService.loadPrintedOrders(payload)
+      }
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 

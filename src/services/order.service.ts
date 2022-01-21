@@ -21,6 +21,11 @@ export class OrderService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadThermalOrders(payload: IPayload) {
+    const pattern = {cmd: 'thermal-orders'}
+    return this.clientService.send<any>(pattern, payload).toPromise()
+  }
+
   printOrders(payload: IPayload) {
     const pattern = { cmd: 'print-orders'};
     return this.clientService.send<any>(pattern, payload).toPromise();
