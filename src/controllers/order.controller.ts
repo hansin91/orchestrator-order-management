@@ -26,7 +26,7 @@ export class OrderController {
   }
 
   @Patch()
-  async printOrders(@Req() req: Request, @Res() res: Response){
+  async setFlagOrderPrinted(@Req() req: Request, @Res() res: Response){
     try {
       const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
       const response = await this.orderService.printOrders(payload);
@@ -56,6 +56,19 @@ export class OrderController {
     } catch (error) {
       console.log(error, '------- ***** ------')
       throw new HttpException(error, error.status);
+    }
+  }
+2
+  @Post('export')
+  async getExportedOrders (@Req() req: Request, @Res() res: Response) {
+    try {
+      const [,token] = req.headers.authorization.split(' ')
+      const param = req.body
+      let payload = {token, body: param}
+      const response = await this.orderService.loadExportedOrders(payload)
+      res.status(response.status).json(response)
+    } catch (error) {
+      throw new HttpException(error, error.status)
     }
   }
 
@@ -332,9 +345,8 @@ export class OrderController {
   @Get('print')
   async loadPrintedOrders(@Req() req: Request, @Res() res: Response) {
     try {
-      let payload
-      payload = {token: req.headers.authorization.split(' ')[1]}
-      const { type, date, page, isSummary } = req.query
+      let payload = {token: req.headers.authorization.split(' ')[1]} as any
+      const { document, date, page, isSummary } = req.query
       if (date) {
         payload.date = date
       }
@@ -342,12 +354,12 @@ export class OrderController {
         payload.page = page
       }
       payload.isSummary = isSummary
+      payload.document = document
       let response = {} as any
-      if (type) {
-        payload.type = type
-        response = await this.orderService.loadThermalOrders(payload)
-      } else {
+      if (document === 'print') {
         response = await this.orderService.loadPrintedOrders(payload)
+      } else {
+        response = await this.orderService.loadThermalOrders(payload)
       }
       res.status(response.status).json(response)
     } catch (error) {

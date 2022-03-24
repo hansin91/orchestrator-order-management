@@ -11,6 +11,11 @@ export class OrderService {
     return this.clientService.send<any>(pattern, payload).toPromise();
   }
 
+  loadExportedOrders(payload: IPayload) {
+    const pattern = { cmd: 'exported-orders' }
+    return this.clientService.send<any>(pattern, payload).toPromise()
+  }
+
   loadOrderShopee(payload: IPayload) {
     const pattern = { cmd: 'orders-shopee'};
     return this.clientService.send<any>(pattern, payload).toPromise();
