@@ -1,72 +1,89 @@
-import { Controller, Get, Req, Res, HttpException, Patch, Body, Put, Post } from '@nestjs/common';
-import { Request, Response } from 'express';
-import {  ProductService } from '@services';
+import { Controller, Get, Req, Res, HttpException, Patch, Body, Put, Post } from '@nestjs/common'
+import { Request, Response } from 'express'
+import {  ProductService } from '@services'
 
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Post('v2/shopee')
+  async loadShopeeV2Products(@Req() req: Request, @Res() res: Response) {
+    try {
+      const { headers: { authorization } } = req
+      const {page, status, limit} = req.body
+      const param = {page, status, limit}
+      const payload = {token: authorization.split(' ')[1], body: param}
+      const response = await this.productService.loadShopeeV2Products(payload)
+      res.status(response.status).json(response)
+    } catch (error) {
+      throw new HttpException(error, error.status)
+    }
+  }
+
+  @Get('v2/shopee')
+  async getShopeeV2Products(@Req() req: Request, @Res() res: Response) {
+    try {
+      const { headers: { authorization } } = req
+      const payload = {token: authorization.split(' ')[1]}
+      const response = await this.productService.getShopeeV2Products(payload)
+      res.status(response.status).json(response)
+    } catch (error) {
+      throw new HttpException(error, error.status)
+    }
+  }
+  
   @Get('unmapped')
   async loadUnmappedProducts(@Req() req: Request, @Res() res: Response) {
     try {
-      const {name, limit, page, groupId} = req.query;
-      const { headers: { authorization } } = req;
+      const {name, limit, page, groupId} = req.query
+      const { headers: { authorization } } = req
       const payload = {
         token: authorization.split(' ')[1],
         name: name ? name : '',
         page: page ? page : 1,
         limit,
         groupId: groupId ? groupId : '',
-      };
-      const response = await this.productService.loadUnmappedProducts(payload);
-      res.status(response.status).json(response);
+      }
+      const response = await this.productService.loadUnmappedProducts(payload)
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 
   @Put('stores')
   async editProductStore(@Body() product: any, @Req() req: Request, @Res() res: Response) {
     try {
-      const { headers: { authorization } } = req;
-      const payload = {
-        token: authorization.split(' ')[1],
-        body: product,
-      };
-      const response = await this.productService.editProductStore(payload);
-      res.status(response.status).json(response);
+      const { headers: { authorization } } = req
+      const payload = {token: authorization.split(' ')[1], body: product}
+      const response = await this.productService.editProductStore(payload)
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 
   @Post('stores')
   async createProductStore(@Body() product: any, @Req() req: Request, @Res() res: Response) {
     try {
-      const { headers: { authorization } } = req;
-      const payload = {
-        token: authorization.split(' ')[1],
-        body: product,
-      };
-      const response = await this.productService.createProductStore(payload);
-      res.status(response.status).json(response);
+      const { headers: { authorization } } = req
+      const payload = {token: authorization.split(' ')[1], body: product}
+      const response = await this.productService.createProductStore(payload)
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 
   @Post('mapped')
   async mappingProducts(@Body() body: any, @Req() req: Request, @Res() res: Response) {
     try {
-      const { headers: { authorization } } = req;
-      const payload = {
-        token: authorization.split(' ')[1],
-        body,
-      };
-      const response = await this.productService.mappingProducts(payload);
-      res.status(response.status).json(response);
+      const { headers: { authorization } } = req
+      const payload = {token: authorization.split(' ')[1], body}
+      const response = await this.productService.mappingProducts(payload)
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 
@@ -194,32 +211,24 @@ export class ProductController {
   @Patch()
   async setProductGroup(@Body() product: any, @Req() req: Request, @Res() res: Response) {
     try {
-      const { headers: { authorization } } = req;
-      let payload;
-      payload = {
-        token: authorization.split(' ')[1],
-      };
-      payload.body = product;
-      const response = await this.productService.setProductGroup(payload);
-      res.status(response.status).json(response);
+      const { headers: { authorization } } = req
+      const payload = {token: authorization.split(' ')[1], body: product}
+      const response = await this.productService.setProductGroup(payload)
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 
   @Get(':id')
   async loadProductDetail(@Req() req: Request, @Res() res: Response) {
     try {
-      const { id } = req.params;
-      let payload;
-      payload = {
-        token: req.headers.authorization.split(' ')[1],
-        id,
-      };
-      const response = await this.productService.loadProduct(payload);
-      res.status(response.status).json(response);
+      const { id } = req.params
+      const payload = {token: req.headers.authorization.split(' ')[1], id}
+      const response = await this.productService.loadProduct(payload)
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 }
