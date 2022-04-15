@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res, HttpException, Patch, Body, Put, Post } from '@nestjs/common'
 import { Request, Response } from 'express'
-import {  ProductService } from '@services'
+import { ProductService } from '@services'
 
 @Controller('products')
 export class ProductController {
@@ -10,22 +10,10 @@ export class ProductController {
   async loadShopeeV2Products(@Req() req: Request, @Res() res: Response) {
     try {
       const { headers: { authorization } } = req
-      const {page, status, limit} = req.body
-      const param = {page, status, limit}
+      const {page, all, status, limit} = req.body
+      const param = {page, all, status, limit}
       const payload = {token: authorization.split(' ')[1], body: param}
       const response = await this.productService.loadShopeeV2Products(payload)
-      res.status(response.status).json(response)
-    } catch (error) {
-      throw new HttpException(error, error.status)
-    }
-  }
-
-  @Get('v2/shopee')
-  async getShopeeV2Products(@Req() req: Request, @Res() res: Response) {
-    try {
-      const { headers: { authorization } } = req
-      const payload = {token: authorization.split(' ')[1]}
-      const response = await this.productService.getShopeeV2Products(payload)
       res.status(response.status).json(response)
     } catch (error) {
       throw new HttpException(error, error.status)

@@ -11,11 +11,6 @@ export class ProductService {
     return this.clientService.send<any>(pattern, payload).toPromise()
   }
 
-  getShopeeV2Products(payload: IPayload) {
-    const pattern = {cmd: 'get-shopee-v2-products'}
-    return this.clientService.send<any>(pattern, payload).toPromise()
-  }
-
   loadProductSummary(payload: IPayload) {
     const pattern = { cmd: 'load-product-summary'}
     return this.clientService.send<any>(pattern, payload).toPromise()
