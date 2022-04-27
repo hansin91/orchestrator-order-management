@@ -23,7 +23,8 @@
   "_moduleAliases": {
     "@services": "dist/services",
     "@interfaces": "dist/interfaces",
-    "@controllers": "dist/controllers"
+    "@controllers": "dist/controllers",
+    "@producers": "dist/producers"
   },
   "dependencies": {
     "@nestjs/bull": "^0.4.2",
