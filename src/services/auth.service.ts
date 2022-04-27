@@ -4,8 +4,7 @@ import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @Inject('AUTH_SERVICE') private readonly clientService: ClientProxy) {}
+  constructor(@Inject('AUTH_SERVICE') private readonly clientService: ClientProxy) {}
 
   login(payload: ILogin) {
     const pattern = { cmd: 'login'};

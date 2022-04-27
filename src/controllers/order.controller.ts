@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, Req, Res, HttpException, Post, Put, Patch, HttpStatus } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { OrderDetailService, OrderService, QueueService, UploadedFileService } from '@services'
-import { FileProducerService, OrderProducerService } from '../producers'
+import { FileProducerService, OrderProducerService } from '@producers'
 
 
 @Controller('orders')
@@ -490,7 +490,6 @@ export class OrderController {
     try {
       const payload = {token: req.headers.authorization.split(' ')[1], body: req.body}
       const job = await this.orderProducerService.massOrder(payload)
-      // const response = await this.queueService.saveMassOrder(payload)
       res.status(HttpStatus.OK).json('completed')
     } catch (error) {
       throw new HttpException(error, error.status)

@@ -17,9 +17,11 @@ import {
   PriceService,
   UploadedOrderService,
   UploadedFileService,
-  OrderDetailService
+  OrderDetailService,
+  ReportService,
+  TokenService
 } from '@services';
-import { UploadProducerService, FileProducerService, OrderProducerService } from './producers'
+import { UploadProducerService, FileProducerService, OrderProducerService, ProductsReportProducerService } from '@producers'
 import {
   AuthController,
   CategoryController,
@@ -50,7 +52,8 @@ import { Queue } from './queue'
     BullModule.registerQueue(
       {name: 'file-queue'},
       {name: 'upload-queue'},
-      {name: 'order-queue'}
+      {name: 'order-queue'},
+      {name: 'products-report-queue'}
     ),
     ClientsModule.register([
       {
@@ -132,6 +135,12 @@ import { Queue } from './queue'
     ]),
     ClientsModule.register([
       {
+        name: 'REPORT_SERVICE',
+        ...clientOptions
+      }
+    ]),
+    ClientsModule.register([
+      {
         name: 'QUEUE_SERVICE',
         ...rabbitMQOptions,
       },
@@ -165,9 +174,12 @@ import { Queue } from './queue'
     PageService,
     UploadedFileService,
     OrderDetailService,
+    ReportService,
+    TokenService,
     FileProducerService,
     OrderProducerService,
-    UploadProducerService
+    UploadProducerService,
+    ProductsReportProducerService
   ],
   controllers: [
     AuthController,

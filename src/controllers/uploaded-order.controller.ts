@@ -1,6 +1,6 @@
 import { Controller, Post, Req, Res, HttpException, HttpStatus } from '@nestjs/common'
 import { Request, Response } from 'express'
-import { UploadProducerService } from '../producers'
+import { UploadProducerService } from '@producers'
 
 @Controller('uploaded-orders')
 export class UploadedOrderController {
