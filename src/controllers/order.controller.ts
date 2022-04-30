@@ -3,7 +3,6 @@ import { Request, Response } from 'express'
 import { OrderDetailService, OrderService, QueueService, UploadedFileService } from '@services'
 import { FileProducerService, OrderProducerService } from '@producers'
 
-
 @Controller('orders')
 export class OrderController {
   constructor(
