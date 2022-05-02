@@ -506,4 +506,16 @@ export class OrderController {
     }
   }
 
+  @Get(':input')
+  async findSingleOrder(@Req() req: Request, @Res() res: Response) {
+    try {
+      const {input} = req.params
+      const payload = {token: req.headers.authorization.split(' ')[1], body: input}
+      const response = await this.orderService.loadSingleOrder(payload)
+      res.status(response.status).json(response)
+    } catch (error) {
+      throw new HttpException(error, error.status)
+    }
+  }
+
 }
