@@ -1,12 +1,12 @@
 import { Controller, Delete, Get, Req, Res, HttpException, Post, Put, Patch, HttpStatus } from '@nestjs/common'
 import { Request, Response } from 'express'
-import { OrderDetailService, OrderService, QueueService, UploadedFileService } from '@services'
+import { OrderDetailService, OrderService, TokenService, UploadedFileService } from '@services'
 import { FileProducerService, OrderProducerService } from '@producers'
 
 @Controller('orders')
 export class OrderController {
   constructor(
-    private readonly queueService: QueueService,
+    private readonly tokenService: TokenService,
     private readonly uploadedFileService: UploadedFileService,
     private readonly orderDetailService: OrderDetailService,
     private readonly orderService: OrderService,
@@ -16,11 +16,15 @@ export class OrderController {
   @Post()
   async saveOrder(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
-      const response = await this.queueService.saveOrder(payload);
-      res.status(response.status).json(response);
+      const body = req.body
+      const {order: {user}} = body
+      const token = this.tokenService.generateApiToken(user)
+      const payload = {token, body, type: 'single'}
+      const job = await this.orderProducerService.processOrders(payload)
+      const response = await job.finished()
+      res.status(response.status).json(response)
     } catch (error) {
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 
@@ -49,12 +53,16 @@ export class OrderController {
   @Post('bulk')
   async saveBulkOrder(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
-      const response = await this.queueService.saveBulkOrder(payload);
-      res.status(response.status).json(response);
+      const body = req.body
+      const {user} = body
+      const token = this.tokenService.generateApiToken(user)
+      const payload = {token, body, type: 'bulk'}
+      const job = await this.orderProducerService.processOrders(payload)
+      const response = await job.finished()
+      res.status(response.status).json(response)
     } catch (error) {
       console.log(error, '------- ***** ------')
-      throw new HttpException(error, error.status);
+      throw new HttpException(error, error.status)
     }
   }
 2
@@ -487,8 +495,8 @@ export class OrderController {
   @Post('mass')
   async saveOrderMass(@Req() req: Request, @Res() res: Response) {
     try {
-      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body}
-      const job = await this.orderProducerService.massOrder(payload)
+      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body, type: 'mass'}
+      const job = await this.orderProducerService.processOrders(payload)
       res.status(HttpStatus.OK).json('completed')
     } catch (error) {
       throw new HttpException(error, error.status)

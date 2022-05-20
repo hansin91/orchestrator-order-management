@@ -6,7 +6,7 @@ import { Queue } from "bull"
 export class OrderProducerService {
   constructor(@InjectQueue('order-queue') private readonly queue: Queue) {}
 
-  async massOrder(message: any) {
+  async processOrders(message: any) {
     const job = await this.queue.add('order-job', message, {
       removeOnComplete: true,
       attempts: 3
