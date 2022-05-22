@@ -1,6 +1,6 @@
 import { Controller, Delete, Get, Req, Res, HttpException, Post, Put, Patch, HttpStatus } from '@nestjs/common'
 import { Request, Response } from 'express'
-import { OrderDetailService, OrderService, TokenService, UploadedFileService } from '@services'
+import { OrderService, TokenService, UploadedFileService } from '@services'
 import { FileProducerService, OrderProducerService } from '@producers'
 
 @Controller('orders')
@@ -8,7 +8,6 @@ export class OrderController {
   constructor(
     private readonly tokenService: TokenService,
     private readonly uploadedFileService: UploadedFileService,
-    private readonly orderDetailService: OrderDetailService,
     private readonly orderService: OrderService,
     private readonly orderProducerService: OrderProducerService,
     private readonly fileProducerService: FileProducerService) {}
@@ -500,17 +499,6 @@ export class OrderController {
       res.status(HttpStatus.OK).json('completed')
     } catch (error) {
       throw new HttpException(error, error.status)
-    }
-  }
-
-  @Post('details')
-  async insertOrderDetail(@Req() req: Request, @Res() res: Response) {
-    try {
-      const payload = {token: req.headers.authorization.split(' ')[1], body: req.body};
-      const response = await this.orderDetailService.insertOrderDetail(payload);
-      res.status(response.status).json(response);
-    } catch (error) {
-      throw new HttpException(error, error.status);
     }
   }
 

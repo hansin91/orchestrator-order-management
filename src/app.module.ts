@@ -9,19 +9,16 @@ import {
   OrderService,
   StatusService,
   ShippingService,
-  QueueService,
   PageService,
   ProductService,
   StoreService,
   LocationService,
   PriceService,
-  UploadedOrderService,
   UploadedFileService,
-  OrderDetailService,
   ReportService,
   TokenService
 } from '@services';
-import { UploadProducerService, FileProducerService, OrderProducerService, ProductsReportProducerService } from '@producers'
+import { UploadProducerService, FileProducerService, OrderProducerService, ReportProducerService } from '@producers'
 import {
   AuthController,
   CategoryController,
@@ -39,9 +36,9 @@ import {
   PriceController,
   UploadedOrderController,
   UploadedFileController,
+  ReportController
 } from '@controllers';
 import { IsAuthenticated } from './middlewares/isAuthenticated';
-import { rabbitMQOrderDetailOptions, rabbitMQOptions, rabbitMQUploadedOrderOptions } from './rabbitMQ';
 import { Queue } from './queue'
 
 @Module({
@@ -53,7 +50,7 @@ import { Queue } from './queue'
       {name: 'file-queue'},
       {name: 'upload-queue'},
       {name: 'order-queue'},
-      {name: 'products-report-queue'}
+      {name: 'report-queue'}
     ),
     ClientsModule.register([
       {
@@ -138,25 +135,7 @@ import { Queue } from './queue'
         name: 'REPORT_SERVICE',
         ...clientOptions
       }
-    ]),
-    ClientsModule.register([
-      {
-        name: 'QUEUE_SERVICE',
-        ...rabbitMQOptions,
-      },
-    ]),
-    ClientsModule.register([
-      {
-        name: 'UPLOADED_ORDER_SERVICE',
-        ...rabbitMQUploadedOrderOptions,
-      },
-    ]),
-    ClientsModule.register([
-      {
-        name: 'ORDER_DETAIL_SERVICE',
-        ...rabbitMQOrderDetailOptions,
-      },
-    ]),
+    ])
   ],
   providers: [
     AuthService,
@@ -164,22 +143,19 @@ import { Queue } from './queue'
     GroupService,
     OrderService,
     ShippingService,
-    QueueService,
     StatusService,
     ProductService,
-    UploadedOrderService,
     StoreService,
     LocationService,
     PriceService,
     PageService,
     UploadedFileService,
-    OrderDetailService,
     ReportService,
     TokenService,
     FileProducerService,
     OrderProducerService,
     UploadProducerService,
-    ProductsReportProducerService
+    ReportProducerService
   ],
   controllers: [
     AuthController,
@@ -197,7 +173,8 @@ import { Queue } from './queue'
     LocationController,
     PageController,
     UploadedFileController,
-    UploadedOrderController],
+    UploadedOrderController,
+    ReportController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

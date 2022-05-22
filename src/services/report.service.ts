@@ -7,13 +7,20 @@ export class ReportService {
 
   constructor(@Inject('REPORT_SERVICE') private readonly clientService: ClientProxy) {}
   
-  requestReport(payload: IPayload) {
-    const pattern = {cmd: 'request-report'}
+  createReport(payload: IPayload) {
+    const pattern = {cmd: 'create-report'}
     return this.clientService.send<any>(pattern, payload).toPromise()
   }
 
-  findReports(payload: IPayload) {
-    const pattern = {cmd: 'find-reports'}
+  loadReports(payload: IPayload) {
+    const pattern = {cmd: 'load-reports'}
     return this.clientService.send<any>(pattern, payload).toPromise()
   }
+
+  fileDownloaded(payload: IPayload) {
+    const pattern = {cmd: 'file-downloaded'}
+    return this.clientService.send<any>(pattern, payload).toPromise()
+  }
+
+
 }

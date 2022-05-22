@@ -1,16 +1,17 @@
-export * from './auth.controller';
-export * from './category.controller';
-export * from './group.controller';
-export * from './order.controller';
-export * from './status.controller';
-export * from './shipping.controller';
-export * from './page.controller';
-export * from './product.controller';
-export * from './store.controller';
-export * from './warehouse.controller';
-export * from './room.controller';
-export * from './rack.controller';
-export * from './location.controller';
-export * from './price.controller';
-export * from './uploaded-order.controller';
-export * from './uploaded-file.controller';
+export { AuthController } from './auth.controller'
+export { CategoryController } from './category.controller'
+export { GroupController } from './group.controller'
+export { OrderController } from './order.controller'
+export { StatusController } from './status.controller'
+export { ShippingController } from './shipping.controller'
+export { PageController } from './page.controller'
+export { ProductController } from './product.controller'
+export { StoreController } from './store.controller'
+export { WarehouseController } from './warehouse.controller'
+export { RoomController } from './room.controller'
+export { RackController } from './rack.controller'
+export { LocationController } from './location.controller'
+export { PriceController } from './price.controller'
+export { UploadedOrderController } from './uploaded-order.controller'
+export { UploadedFileController } from './uploaded-file.controller'
+export { ReportController } from './report.controller'

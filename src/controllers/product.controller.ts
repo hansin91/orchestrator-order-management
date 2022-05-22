@@ -1,47 +1,11 @@
-import { Controller, Get, Req, Res, HttpException, Patch, Body, Put, Post, HttpStatus } from '@nestjs/common'
+import { Controller, Get, Req, Res, HttpException, Patch, Body, Put, Post } from '@nestjs/common'
 import { Request, Response } from 'express'
-import { TokenService, ProductService, ReportService } from '@services'
-import { ProductsReportProducerService } from '@producers'
+import { ProductService } from '@services'
 
 @Controller('products')
 export class ProductController {
-  constructor(
-    private readonly productsReportService: ProductsReportProducerService,
-    private readonly tokenService: TokenService,
-    private readonly reportService: ReportService,
-    private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) {}
   
-  @Post('report')
-  async requestProductsReport(@Req() req: Request, @Res() res: Response) {
-    try {
-      const {headers: { authorization }} = req
-      const {type, user, name} = req.body
-      const param = {type, user, name}
-      const payload = {token: authorization.split(' ')[1], body: param}
-      const response = await this.reportService.requestReport(payload)
-      const token = this.tokenService.generateApiToken(user)
-      const {report} = response
-      const message = {token, body: report}
-      this.productsReportService.productsReport(message)
-      res.status(HttpStatus.OK).json(response)
-    } catch (error) {
-      throw new HttpException(error, error.status)
-    }
-  }
-
-  @Get('reports')
-  async loadProductReports(@Req() req: Request, @Res() res: Response) {
-    try {
-      const {headers: { authorization }} = req
-      const {type} = req.query
-      const payload = {token: authorization.split(' ')[1], body: {type}}
-      const response = await this.reportService.findReports(payload)
-      res.status(HttpStatus.OK).json(response)
-    } catch (error) {
-      throw new HttpException(error, error.status)
-    }
-  }
-
   @Post('v2/shopee')
   async loadShopeeV2Products(@Req() req: Request, @Res() res: Response) {
     try {
