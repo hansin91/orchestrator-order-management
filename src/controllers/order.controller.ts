@@ -361,12 +361,7 @@ export class OrderController {
       }
       payload.isSummary = isSummary
       payload.document = document
-      let response = {} as any
-      if (document === 'print') {
-        response = await this.orderService.loadPrintedOrders(payload)
-      } else {
-        response = await this.orderService.loadThermalOrders(payload)
-      }
+      const response = await this.orderService.loadPrintedOrders(payload)
       res.status(response.status).json(response)
     } catch (error) {
       throw new HttpException(error, error.status)
