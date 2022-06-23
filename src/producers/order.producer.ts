@@ -10,7 +10,7 @@ export class OrderProducerService {
     const job = await this.queue.add('order-job', message, {
       removeOnComplete: true,
       removeOnFail: true,
-      attempts: 5
+      attempts: 3
     })
     return job
   }
