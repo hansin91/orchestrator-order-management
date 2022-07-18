@@ -10,8 +10,8 @@ export class FileProducerService {
     const job = await this.queue.add('file-job', message, {
       removeOnComplete: true,
       removeOnFail: true,
-      attempts: 3,
-      stackTraceLimit: 20
+      attempts: 5,
+      // stackTraceLimit: 20
     })
     return job
   }
