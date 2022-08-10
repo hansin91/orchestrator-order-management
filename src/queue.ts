@@ -9,9 +9,9 @@ export const Queue = {
     password: PASSWORD 
   },
   settings: {
-    lockDuration: 30000,
+    lockDuration: 50000,
     lockRenewTime: 15000,
-    stalledInterval: 30000, 
+    stalledInterval: 50000, 
     maxStalledCount: 1,
     guardInterval: 5000,
     retryProcessDelay: 5000,
