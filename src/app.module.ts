@@ -37,12 +37,17 @@ import {
   UploadedOrderController,
   UploadedFileController,
   ReportController
-} from '@controllers';
-import { IsAuthenticated } from './middlewares/isAuthenticated';
+} from '@controllers'
+import { IsAuthenticated } from './middlewares/isAuthenticated'
 import { Queue } from './queue'
+import { RouterModule } from 'nest-router'
+import { routes } from './routes'
+import { CheckerModule } from './mobile/order-checker/checker.module'
 
 @Module({
   imports: [
+    RouterModule.forRoutes(routes),
+    CheckerModule,
     BullModule.forRoot({
       ...Queue
     }),
@@ -182,7 +187,7 @@ export class AppModule implements NestModule {
     .apply(IsAuthenticated)
     .exclude(
       { path: 'auth/login', method: RequestMethod.POST },
-      { path: 'auth/gLogin', method: RequestMethod.POST },
+      { path: 'auth/gLogin', method: RequestMethod.POST }
     )
     .forRoutes(
       GroupController,

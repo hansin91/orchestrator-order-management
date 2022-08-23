@@ -9,3 +9,12 @@ export const clientOptions: ClientOptions = {
     port,
   },
 };
+
+export const natsClient: ClientOptions = {
+  transport: Transport.NATS,
+  options: {
+    servers: ['nats://localhost:4222'],
+    user: 'admin_nats',
+    pass: 'superpassword'
+  }
+}
