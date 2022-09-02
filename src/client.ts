@@ -20,3 +20,9 @@ export const natsClient: ClientOptions = {
     pass: NATS_PASSWORD
   }
 }
+
+export const natsQueueClient = (queue: string) => {
+  const client = {...natsClient} as ClientOptions
+  client.options = {...client.options, queue, verbose: true}
+  return client
+}

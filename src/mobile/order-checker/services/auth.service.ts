@@ -1,9 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
+import { CHECKER_AUTH_SERVICE } from './types'
 
 @Injectable()
 export class AuthService {
-  constructor(@Inject('CHECKER_AUTH_SERVICE') private readonly clientService: ClientProxy) {}
+  constructor(@Inject(`${CHECKER_AUTH_SERVICE}`) private readonly clientService: ClientProxy) {}
 
   loginUser(payload: any) {
     const pattern = {cmd: 'checker-login'}
