@@ -16,6 +16,6 @@ export const Queue = {
     guardInterval: 5000,
     retryProcessDelay: 5000,
     backoffStrategies: {},
-    drainDelay: 5
+    drainDelay: 300
   }
 }
