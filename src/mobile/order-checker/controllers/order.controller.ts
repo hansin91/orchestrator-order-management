@@ -2,7 +2,7 @@ import { Body, Controller, HttpException, Post, Req, Res } from '@nestjs/common'
 import { Response, Request } from 'express'
 import { OrderCheckerService, OrderService } from '../services'
 
-@Controller('orders')
+@Controller()
 export class OrderController {
 
   constructor(
