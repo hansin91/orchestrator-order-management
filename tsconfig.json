@@ -25,6 +25,9 @@
       ],
       "@producers": [
         "src/producers"
+      ],
+      "@helpers": [
+        "src/helpers"
       ]
     }
   },

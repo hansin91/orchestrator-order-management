@@ -17,4 +17,9 @@ export class OrderCheckerService {
     const pattern = {cmd: 'checker-create'}
     return this.orderQueueService.send<any>(pattern, payload).toPromise()
   }
-}
+
+  updateOrderCheckerDetail(payload: any) {
+    const pattern = {cmd: 'checker-detail-update'}
+    return this.clientService.send<any>(pattern, payload).toPromise()
+  }
+ }
