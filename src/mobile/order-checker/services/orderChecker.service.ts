@@ -22,4 +22,10 @@ export class OrderCheckerService {
     const pattern = {cmd: 'checker-detail-update'}
     return this.clientService.send<any>(pattern, payload).toPromise()
   }
+
+  findOneOrderChecker(payload: any) {
+    const pattern = {cmd: 'checker-find-one'}
+    return this.clientService.send<any>(pattern, payload).toPromise()
+  }
+
  }

@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, Patch, Post, Req, Res } from '@nestjs/common'
+import { Body, Controller, Get, HttpException, Patch, Post, Req, Res } from '@nestjs/common'
 import { Response, Request } from 'express'
 import { parseToken } from '@helpers'
 import { OrderCheckerService, OrderService, StatusService } from '../services'
@@ -68,6 +68,20 @@ export class OrderController {
       res.status(response.status).json(response)
     } catch (error) {
       throw new HttpException(error, error.status)
+    }
+  }
+
+  @Get(':id')
+  async findOneOrderChecker(@Req() req: Request, @Res() res: Response) {
+    try {
+      const {id} = req.params
+      const token = parseToken(req)
+      const payload = {token, id}
+      const response = await this.orderCheckerService.findOneOrderChecker(payload)
+      res.status(response.status).json(response)
+    } catch (error) {
+      const {status} = error
+      throw new HttpException(error, status)
     }
   }
 }
