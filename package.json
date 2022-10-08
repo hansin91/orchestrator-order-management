@@ -24,7 +24,8 @@
     "@services": "dist/services",
     "@interfaces": "dist/interfaces",
     "@controllers": "dist/controllers",
-    "@producers": "dist/producers"
+    "@producers": "dist/producers",
+    "@helpers": "dist/helpers"
   },
   "dependencies": {
     "@nestjs/bull": "^0.4.2",
