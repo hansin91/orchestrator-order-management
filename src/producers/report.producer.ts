@@ -9,7 +9,6 @@ export class ReportProducerService {
   async productReports(message: any) {
     const job = await this.queue.add('product-job', message, {
       removeOnComplete: true,
-      removeOnFail: true,
       attempts: 3
     })
     return job
