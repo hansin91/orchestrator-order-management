@@ -9,13 +9,13 @@ export const Queue = {
     password: PASSWORD 
   },
   settings: {
-    lockDuration: 50000,
+    lockDuration: 30000,
     lockRenewTime: 15000,
     stalledInterval: 50000, 
     maxStalledCount: 1,
     guardInterval: 5000,
     retryProcessDelay: 5000,
     backoffStrategies: {},
-    drainDelay: 300
+    drainDelay: 5
   }
 }
