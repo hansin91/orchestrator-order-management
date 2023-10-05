@@ -43,6 +43,7 @@ import { Queue } from './queue'
 import { RouterModule } from 'nest-router'
 import { routes } from './routes'
 import { CheckerModule } from './mobile/order-checker/checker.module'
+import { ShopeeController } from './controllers/shopee.controller';
 
 @Module({
   imports: [
@@ -179,6 +180,7 @@ import { CheckerModule } from './mobile/order-checker/checker.module'
     PageController,
     UploadedFileController,
     UploadedOrderController,
+    ShopeeController,
     ReportController],
 })
 export class AppModule implements NestModule {
@@ -187,7 +189,8 @@ export class AppModule implements NestModule {
     .apply(IsAuthenticated)
     .exclude(
       { path: 'auth/login', method: RequestMethod.POST },
-      { path: 'auth/gLogin', method: RequestMethod.POST }
+      { path: 'auth/gLogin', method: RequestMethod.POST },
+      { path: 'shopee/webhook', method: RequestMethod.POST },
     )
     .forRoutes(
       GroupController,
@@ -205,6 +208,7 @@ export class AppModule implements NestModule {
       PriceController,
       UploadedOrderController,
       UploadedFileController,
+      ShopeeController,
       OrderController);
   }
 }
