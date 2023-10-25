@@ -9,7 +9,16 @@ import { readFileSync } from 'fs';
 
 async function bootstrap() {
   const environment = process.env.NODE_ENV
-  const app = await NestFactory.create(AppModule);
+  let app;
+  if (environment === 'development') {
+    app = await NestFactory.create(AppModule);
+  } else {
+    const httpsOptions = {
+      key: readFileSync('./secret/privkey.pem'),
+      cert: readFileSync('./secret/cert.pem'),
+    };
+    app = await NestFactory.create(AppModule, {httpsOptions});
+  }
   app.useGlobalFilters(new AllExceptionsFilter());
   app.enableCors();
   app.use(helmet());
