@@ -5,9 +5,20 @@ import * as compressionn from 'compression';
 import { urlencoded, json } from 'express';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './middlewares/errorHandler';
+import { readFileSync } from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const environment = process.env.NODE_ENV
+  let app;
+  if (environment === 'development') {
+    app = await NestFactory.create(AppModule);
+  } else {
+    const httpsOptions = {
+      key: readFileSync('../secret/privkey.pem'),
+      cert: readFileSync('../secret/fullchain.pem'),
+    };
+    app = await NestFactory.create(AppModule, {httpsOptions});
+  }
   app.useGlobalFilters(new AllExceptionsFilter());
   app.enableCors();
   app.use(helmet());
